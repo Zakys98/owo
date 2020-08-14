@@ -23,7 +23,7 @@ class Controller {
     void printLineOfSection(int, int);
     void deleteLineOfSection(int, int);
     void deleteMemoryLeaksSection(int);
-    void checkIfSectionIsEmpty(int);
+    void checkIfSectionTextExists(int, int);
 
    public:
     void addSection(char **);

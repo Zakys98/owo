@@ -123,11 +123,11 @@ void Controller::deleteDecision(int arc, char **arg) {
         // dodelat kontrolu jestli to je int
         if (strlen(ptr) == 0) {
             checkExistSectionName(sectionId);
-            checkIfSectionIsEmpty(sectionId);
+            checkIfSectionTextExists(sectionId, line);         
             deleteLineOfSection(sectionId, line);
         } else {
             sectionId = checkExistSectionName(arg[2]);
-            checkIfSectionIsEmpty(sectionId);
+            checkIfSectionTextExists(sectionId, line);
             deleteLineOfSection(sectionId, line);
         }
         changeSectionTextsIdAfterDelete(sectionId);
@@ -159,8 +159,9 @@ void Controller::changeSectionTextsIdAfterDelete(int section) {
         sections[section].getData()[i]->setId(i);
 }
 
-void Controller::checkIfSectionIsEmpty(int sectionId) {
-    if (sections[sectionId].getData().empty()) throw "Section is empty\n";
+void Controller::checkIfSectionTextExists(int sectionId, int line) {
+    if ((int)sections[sectionId].getData().size() <= line)
+        throw "Section text doesnt exist\n";
 }
 
 std::vector<Section> Controller::getSections() { return sections; }
