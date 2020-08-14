@@ -21,6 +21,8 @@ EXP11="./testing/case#11"
 EXP12="./testing/case#12"
 EXP13="./testing/case#13"
 EXPsectionDoesntExist="./testing/case#SectionDoesntExist"
+EXP16="./testing/case#16"
+EXPsectionTextDoesntExist="./testing/case#sectionTextDoesntExist"
 
 #Before start
 ./owo clean
@@ -102,8 +104,22 @@ echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section by name)${C
 diff -s $EXPsectionDoesntExist <(./owo delete third)
 ((number++))
 
-#./owo delete 0 1
-#dodelat kontroly na odstranovani mimo velikost
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
+./owo d 1 0
+diff -s document.txt $EXP16
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
+diff -s $EXPsectionTextDoesntExist <(./owo d 1 3)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
+./owo d 1 0
+diff -s $EXPsectionTextDoesntExist <(./owo delete 1 0)
+((number++))
+
+#clear document.txt
+./owo delete 1
 
 ./owo add git
 ./owo add git "git init                     - initialize repository"
