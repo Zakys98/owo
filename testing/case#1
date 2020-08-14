@@ -1,0 +1,5 @@
+owo init               - initialize repository
+owo add    <section> <text>
+owo delete <section> <line>
+owo print  --sections  - prints all sections
+owo clean
