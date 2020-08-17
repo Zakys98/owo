@@ -2,5 +2,6 @@ files
 headers
 Makefile
 owo
+README.md
 testing
 testing.sh
