@@ -21,7 +21,6 @@ class File {
     void closeFile();
     void openFileForReading();
     void openFileForWriting();
-    //void clearFileBeforeWriting();
     void removeFile();
     void writeToFile(Controller &);
     void parseFileForController(Controller &);

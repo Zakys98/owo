@@ -20,8 +20,6 @@ void File::removeFile() {
     remove(pom);
 }
 
-// void File::clearFileBeforeWriting() { file.clear(); }
-
 void File::writeToFile(Controller &c) {
     for (unsigned int i = 0; i < c.getSections().size(); i++) {
         file << c.getSections()[i].getId() << " "
