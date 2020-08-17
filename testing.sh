@@ -142,4 +142,4 @@ diff -s $EXPsectionTextDoesntExist <(./owo delete 1 0)
 ./owo add git "git branch <name>                    - create new branch with name"
 ./owo add git "git checkout <branch>                - switch branch"
 ./owo add git "git switch <branch>                  -   ---||---"
-asdas
+./owo add git "git merge <branch>                   - copy branch to master"
