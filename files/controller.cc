@@ -1,8 +1,8 @@
 #include "../headers/controller.h"
 
-void Controller::addSection(char **arg) {
+void Controller::addSection(char **argv) {
     Section s;
-    std::string str(arg[2]);
+    std::string str(argv[2]);
     s.setName(str);
     s.setId(sections.size());
     sections.push_back(s);
@@ -11,8 +11,8 @@ void Controller::addSection(char **arg) {
 
 void Controller::checkSameSectionName() {
     if (sections.empty()) return;
-    for (unsigned int i = 0; i < sections.size() - 1; i++) {
-        if (sections[i].getName() == sections[sections.size() - 1].getName()) {
+    for (unsigned int i = 0; i < sectionsSize() - 1; i++) {
+        if (sections[i].getName() == sections[sectionsSize() - 1].getName()) {
             deleteLast();
             throw "Same section name\n";
         }
@@ -21,61 +21,66 @@ void Controller::checkSameSectionName() {
 
 void Controller::addSection(Section &s) { sections.push_back(s); }
 
-void Controller::addTextToSectionDecision(char **arg) {
-    char *ptr = NULL;
-    int sectionId = strtol(arg[2], &ptr, 10);
-    if (strlen(ptr) == 0) {
-        checkExistSectionName(sectionId);
-        addTextToSection(sectionId, arg[3]);
+void Controller::addTextToSectionDecision(char **argv) {
+    if (isThirdArgumentInt(argv)) {
+        checkExistSectionName();
+        addTextToSection(argv[3]);
     } else {
-        sectionId = checkExistSectionName(arg[2]);
-        addTextToSection(sectionId, arg[3]);
+        sectionId = checkExistSectionName(argv[2]);
+        addTextToSection(argv[3]);
     }
 }
 
-void Controller::checkExistSectionName(int whichSection) {
-    for (unsigned int i = 0; i < sections.size(); i++) {
-        if (sections[i].getId() == whichSection) return;
+bool Controller::isThirdArgumentInt(char **argv) {
+    ptr = nullptr;
+    sectionId = strtol(argv[2], &ptr, 10);
+    if (strlen(ptr) == 0) return true;
+    return false;
+}
+
+void Controller::checkExistSectionName() {
+    for (unsigned int i = 0; i < sectionsSize(); i++) {
+        if (sections[i].getId() == sectionId) return;
     }
     throw "Section doesnt exists\n";
 }
 
 int Controller::checkExistSectionName(char *whichSection) {
     std::string name(whichSection);
-    for (unsigned int i = 0; i < sections.size(); i++) {
+    for (unsigned int i = 0; i < sectionsSize(); i++) {
         if (sections[i].getName() == name) return sections[i].getId();
     }
     throw "Section doesnt exists\n";
 }
 
-void Controller::addTextToSection(int whichSection, char *text) {
-    sections[whichSection].insertData(text);
+void Controller::addTextToSection(char *text) {
+    sections[sectionId].insertData(text);
 }
 
-void Controller::printDecision(int arc, char **arg) {
-    char *ptr = nullptr;
-    int sectionId = strtol(arg[2], &ptr, 10);
-    if (arc == 3) {
-        if (strcmp(arg[2], "--sections") == 0) {
+void Controller::printDecision(int argc, char **argv) {
+    ptr = nullptr;
+    sectionId = strtol(argv[2], &ptr, 10);
+    if (argc == 3) {
+        if (strcmp(argv[2], "--sections") == 0) {
             printAllSections();
         } else {
             if (strlen(ptr) == 0) {
-                checkExistSectionName(sectionId);
-                printSection(sectionId);
+                checkExistSectionName();
+                printSection();
             } else {
-                sectionId = checkExistSectionName(arg[2]);
-                printSection(sectionId);
+                sectionId = checkExistSectionName(argv[2]);
+                printSection();
             }
         }
-    } else if (arc == 4) {
-        int line = strtol(arg[3], nullptr, 10);
+    } else if (argc == 4) {
+        int line = strtol(argv[3], nullptr, 10);
         // dodelat kontrolu jestli je line cislo
         if (strlen(ptr) == 0) {
-            checkExistSectionName(sectionId);
-            printLineOfSection(sectionId, line);
+            checkExistSectionName();
+            printLineOfSection(line);
         } else {
-            sectionId = checkExistSectionName(arg[2]);
-            printLineOfSection(sectionId, line);
+            sectionId = checkExistSectionName(argv[2]);
+            printLineOfSection(line);
         }
     }
 }
@@ -86,7 +91,7 @@ void Controller::printAllSections() {
     }
 }
 
-void Controller::printSection(int sectionId) {
+void Controller::printSection() {
     printSectionIdAndName(sectionId);
     for (int j = 0; j < sections[sectionId].getNumberOfDataLines(); j++) {
         std::cout << "  " << sections[sectionId].getData()[j]->getId() << " "
@@ -99,38 +104,38 @@ void Controller::printSectionIdAndName(int position) {
               << sections[position].getName() << "\n";
 }
 
-void Controller::printLineOfSection(int section, int line) {
-    std::cout << sections[section].getData()[line]->getId() << " "
-              << sections[section].getData()[line]->getText() << "\n";
+void Controller::printLineOfSection(int line) {
+    std::cout << sections[sectionId].getData()[line]->getId() << " "
+              << sections[sectionId].getData()[line]->getText() << "\n";
 }
 
-void Controller::deleteDecision(int arc, char **arg) {
-    char *ptr = nullptr;
-    int sectionId = strtol(arg[2], &ptr, 10);
-    if (arc == 3) {
+void Controller::deleteDecision(int argc, char **argv) {
+    ptr = nullptr;
+    sectionId = strtol(argv[2], &ptr, 10);
+    if (argc == 3) {
         if (strlen(ptr) == 0) {
-            checkExistSectionName(sectionId);
-            deleteMemoryLeaksSection(sectionId);
+            checkExistSectionName();
+            deleteMemoryLeaksSection();
             deleteSpecificSection(sectionId);
         } else {
-            sectionId = checkExistSectionName(arg[2]);
-            deleteMemoryLeaksSection(sectionId);
+            sectionId = checkExistSectionName(argv[2]);
+            deleteMemoryLeaksSection();
             deleteSpecificSection(sectionId);
         }
         changeSectionsIdAfterDelete();
-    } else if (arc == 4) {
-        int line = strtol(arg[3], nullptr, 10);
+    } else if (argc == 4) {
+        int line = strtol(argv[3], nullptr, 10);
         // dodelat kontrolu jestli to je int
         if (strlen(ptr) == 0) {
-            checkExistSectionName(sectionId);
-            checkIfSectionTextExists(sectionId, line);         
-            deleteLineOfSection(sectionId, line);
+            checkExistSectionName();
+            checkIfSectionTextExists(line);
+            deleteLineOfSection(line);
         } else {
-            sectionId = checkExistSectionName(arg[2]);
-            checkIfSectionTextExists(sectionId, line);
-            deleteLineOfSection(sectionId, line);
+            sectionId = checkExistSectionName(argv[2]);
+            checkIfSectionTextExists(line);
+            deleteLineOfSection(line);
         }
-        changeSectionTextsIdAfterDelete(sectionId);
+        changeSectionTextsIdAfterDelete();
     }
 }
 
@@ -142,28 +147,32 @@ void Controller::deleteSpecificSection(int whichSection) {
     sections.erase(sections.begin() + whichSection);
 }
 
-void Controller::deleteLineOfSection(int section, int line) {
-    Data *d = sections[section].getData()[line];
+void Controller::deleteLineOfSection(int line) {
+    Data *d = sections[sectionId].getData()[line];
     delete d;
     d = nullptr;
-    sections[section].deleteData(line);
+    sections[sectionId].deleteData(line);
 }
 
-void Controller::deleteMemoryLeaksSection(int section) {
-    for (unsigned int i = 0; i < sections[section].getData().size(); i++)
-        delete sections[section].getData()[i];
+void Controller::deleteMemoryLeaksSection() {
+    for (unsigned int i = 0; i < sections[sectionId].getData().size(); i++)
+        delete sections[sectionId].getData()[i];
 }
 
-void Controller::changeSectionTextsIdAfterDelete(int section) {
-    for (unsigned int i = 0; i < sections[section].getData().size(); i++)
-        sections[section].getData()[i]->setId(i);
+void Controller::changeSectionTextsIdAfterDelete() {
+    for (unsigned int i = 0; i < sections[sectionId].getData().size(); i++)
+        sections[sectionId].getData()[i]->setId(i);
 }
 
-void Controller::checkIfSectionTextExists(int sectionId, int line) {
+void Controller::checkIfSectionTextExists(int line) {
     if ((int)sections[sectionId].getData().size() <= line)
         throw "Section text doesnt exist\n";
 }
 
 std::vector<Section> Controller::getSections() { return sections; }
+
+unsigned int Controller::sectionsSize(){
+    return sections.size();
+}
 
 void Controller::deleteLast() { sections.erase(sections.end()); }

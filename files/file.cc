@@ -21,7 +21,7 @@ void File::removeFile() {
 }
 
 void File::writeToFile(Controller &c) {
-    for (unsigned int i = 0; i < c.getSections().size(); i++) {
+    for (unsigned int i = 0; i < c.sectionsSize(); i++) {
         file << c.getSections()[i].getId() << " "
              << c.getSections()[i].getName() << " "
              << c.getSections()[i].getNumberOfDataLines() << std::endl;

@@ -1,7 +1,7 @@
 # OwO - program pro zkratky
 
 ```
-altGR + h
+code here
 ```
 
 ---

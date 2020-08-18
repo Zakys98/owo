@@ -141,4 +141,5 @@ void cleanMemory(Controller &c) {
     }
 }
 
+// udelat init sectionId funkci
 // delsi jmeno u sekce dela problem
