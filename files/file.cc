@@ -21,11 +21,11 @@ void File::removeFile() {
 }
 
 void File::writeToFile(Controller &c) {
-    for (unsigned int i = 0; i < c.sectionsSize(); i++) {
+    for (unsigned int i = 0; i < c.getSectionsSize(); i++) {
         file << c.getSections()[i].getId() << " "
              << c.getSections()[i].getName() << " "
              << c.getSections()[i].getNumberOfDataLines() << std::endl;
-        for (unsigned int j = 0; j < c.getSections()[i].getData().size(); j++) {
+        for (unsigned int j = 0; j < c.getSections()[i].getDataSize(); j++) {
             file << c.getSections()[i].getData()[j]->getId() << " "
                  << c.getSections()[i].getData()[j]->getText() << std::endl;
         }

@@ -53,3 +53,7 @@ void Section::deleteData(int position){
 void Section::decNumberOfDatalines(){
     numberOfDataLines--;
 }
+
+unsigned int Section::getDataSize(){
+    return data.size();
+}

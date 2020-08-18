@@ -11,8 +11,8 @@ void Controller::addSection(char **argv) {
 
 void Controller::checkSameSectionName() {
     if (sections.empty()) return;
-    for (unsigned int i = 0; i < sectionsSize() - 1; i++) {
-        if (sections[i].getName() == sections[sectionsSize() - 1].getName()) {
+    for (unsigned int i = 0; i < getSectionsSize() - 1; i++) {
+        if (sections[i].getName() == sections[getSectionsSize() - 1].getName()) {
             deleteLast();
             throw "Same section name\n";
         }
@@ -45,7 +45,7 @@ bool Controller::isThirdArgumentInt() {
 }
 
 void Controller::checkExistSectionName() {
-    for (unsigned int i = 0; i < sectionsSize(); i++) {
+    for (unsigned int i = 0; i < getSectionsSize(); i++) {
         if (sections[i].getId() == sectionId) return;
     }
     throw "Section doesnt exists\n";
@@ -53,7 +53,7 @@ void Controller::checkExistSectionName() {
 
 int Controller::checkExistSectionName(char *whichSection) {
     std::string name(whichSection);
-    for (unsigned int i = 0; i < sectionsSize(); i++) {
+    for (unsigned int i = 0; i < getSectionsSize(); i++) {
         if (sections[i].getName() == name) return sections[i].getId();
     }
     throw "Section doesnt exists\n";
@@ -82,9 +82,6 @@ void Controller::printDecision(int argc, char **argv) {
         // dodelat kontrolu jestli je line cislo
         if (isThirdArgumentInt()) {
             checkExistSectionName();
-            // if((long unsigned int)line >=
-            // sections[sectionId].getData().size() || (long unsigned int)line <
-            // 0) throw "Section line doesnt exists\n";
             checkIfSectionTextExists(line);
             printLineOfSection(line);
         } else {
@@ -95,7 +92,7 @@ void Controller::printDecision(int argc, char **argv) {
 }
 
 void Controller::printAllSections() {
-    for (unsigned int i = 0; i < sectionsSize(); i++) {
+    for (unsigned int i = 0; i < getSectionsSize(); i++) {
         sectionId = i;
         printSectionIdAndName();
     }
@@ -149,7 +146,7 @@ void Controller::deleteDecision(int argc, char **argv) {
 }
 
 void Controller::changeSectionsIdAfterDelete() {
-    for (unsigned int i = 0; i < sectionsSize(); i++) sections[i].setId(i);
+    for (unsigned int i = 0; i < getSectionsSize(); i++) sections[i].setId(i);
 }
 
 void Controller::deleteSection() {
@@ -164,20 +161,20 @@ void Controller::deleteLineOfSection(int line) {
 }
 
 void Controller::deleteMemoryLeaksSection() {
-    for (unsigned int i = 0; i < sections[sectionId].getData().size(); i++)
+    for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
         delete sections[sectionId].getData()[i];
 }
 
 void Controller::changeSectionTextsIdAfterDelete() {
-    for (unsigned int i = 0; i < sections[sectionId].getData().size(); i++)
+    for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
         sections[sectionId].getData()[i]->setId(i);
 }
 
 void Controller::checkIfSectionTextExists(int line) {
-    if ((int)sections[sectionId].getData().size() <= line || line < 0)
+    if ((int)sections[sectionId].getDataSize() <= line || line < 0)
         throw "Section text doesnt exist\n";
 }
 
 std::vector<Section> Controller::getSections() { return sections; }
 
-unsigned int Controller::sectionsSize() { return sections.size(); }
+unsigned int Controller::getSectionsSize() { return sections.size(); }

@@ -28,6 +28,7 @@ class Section{
         void insertData(char*);
         void insertData(Data *);
         void deleteData(int);
+        unsigned int getDataSize();
 };
 
 #endif

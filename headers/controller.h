@@ -36,7 +36,7 @@ class Controller {
     void printDecision(int, char **);
     void deleteDecision(int, char **);
     std::vector<Section> getSections();
-    unsigned int sectionsSize();
+    unsigned int getSectionsSize();
 };
 
 #endif
