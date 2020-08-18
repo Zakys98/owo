@@ -17,7 +17,7 @@ class Controller {
     void addTextToSection(char *);
     void printAllSections();
     void printSection();
-    void printSectionIdAndName(int);
+    void printSectionIdAndName();
     void printLineOfSection(int);
     void deleteSection();
     void changeSectionsIdAfterDelete();

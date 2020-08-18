@@ -8,7 +8,7 @@ IYellow='\033[0;93m'
 IRed='\033[0;91m'  
 
 # Test cases
-EXP1="./testing/case#1"
+TS_help_text="./testing/case#1"
 EXP2="./testing/case#2"
 EXP3="./testing/case#3"
 EXP4="./testing/case#4"
@@ -24,13 +24,15 @@ EXP13="./testing/case#13"
 EXPsectionDoesntExist="./testing/case#SectionDoesntExist"
 EXP16="./testing/case#16"
 EXPsectionTextDoesntExist="./testing/case#sectionTextDoesntExist"
+TS_print_section="./testing/case#print_section"
+TS_print_section_line=."/testing/case#print_section_line"
 
 echo -e "\n${IRed}Testing local owo${Color_Off}\n"
 #Before start
 ./owo clean
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print help text)${Color_Off}"
-diff -u -s $EXP1 <(./owo help)
+diff -u -s $TS_help_text <(./owo help)
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (initialize document.txt))${Color_Off}"
@@ -84,6 +86,22 @@ echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print sections)${Color_Off
 diff -u -s $EXP10 <(./owo print --sections)
 ((number++))
 
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section by id)${Color_Off}"
+diff -u -s $TS_print_section <(./owo print 1)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section by name)${Color_Off}"
+diff -u -s $TS_print_section <(./owo p second)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section line by id)${Color_Off}"
+diff -u -s $TS_print_section_line <(./owo print 1 2)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section line by name)${Color_Off}"
+diff -u -s $TS_print_section_line <(./owo p second 2)
+((number++))
+
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (same section name)${Color_Off}"
 diff -u -s $EXP11 <(./owo add second)
 ((number++))
@@ -120,12 +138,14 @@ echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Colo
 diff -s $EXPsectionTextDoesntExist <(./owo delete 1 0)
 ((number++))
 
+
+
 echo -e "\n${IRed}Testing global owo${Color_Off}\n"
 #Before start
 owo clean
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print help text)${Color_Off}"
-diff -u -s $EXP1 <(owo help)
+diff -u -s $TS_help_text <(owo help)
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (initialize document.txt))${Color_Off}"
@@ -179,8 +199,56 @@ echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print sections)${Color_Off
 diff -u -s $EXP10 <(owo print --sections)
 ((number++))
 
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section by id)${Color_Off}"
+diff -u -s $TS_print_section <(owo print 1)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section by name)${Color_Off}"
+diff -u -s $TS_print_section <(owo p second)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section line by id)${Color_Off}"
+diff -u -s $TS_print_section_line <(owo print 1 2)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print section line by name)${Color_Off}"
+diff -u -s $TS_print_section_line <(owo p second 2)
+((number++))
+
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (same section name)${Color_Off}"
 diff -u -s $EXP11 <(owo add second)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section by id)${Color_Off}"
+owo delete 0
+diff -s document.txt $EXP12
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section by name)${Color_Off}"
+owo delete third
+diff -s document.txt $EXP13
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section by id)${Color_Off}"
+diff -s $EXPsectionDoesntExist <(owo delete 4)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section by name)${Color_Off}"
+diff -s $EXPsectionDoesntExist <(owo delete third)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
+owo d 1 0
+diff -s document.txt $EXP16
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
+diff -s $EXPsectionTextDoesntExist <(owo d 1 3)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
+owo d 1 0
+diff -s $EXPsectionTextDoesntExist <(owo delete 1 0)
 ((number++))
 
 #clear document.txt
