@@ -19,14 +19,15 @@ class Controller {
     void printSection();
     void printSectionIdAndName(int);
     void printLineOfSection(int);
-    void deleteSpecificSection(int);
+    void deleteSection();
     void changeSectionsIdAfterDelete();
     void changeSectionTextsIdAfterDelete();
     void deleteLast();
     void deleteLineOfSection(int);
     void deleteMemoryLeaksSection();
     void checkIfSectionTextExists(int);
-    bool isThirdArgumentInt(char **);
+    void thirdArgumentStrtol(char *);
+    bool isThirdArgumentInt();
 
    public:
     void addSection(char **);

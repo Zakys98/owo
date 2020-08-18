@@ -19,6 +19,7 @@ bool checkIfFileIsInitialized();
 void readAndParseFile(Controller &);
 void openAndWriteToFile(Controller &);
 void cleanMemory(Controller &);
+void initFile();
 
 int main(int argc, char **argv) {
     if (argc >= 2 && argc < 5) {
@@ -27,11 +28,7 @@ int main(int argc, char **argv) {
         File f;
         switch (swi) {
             case init:
-                if (f.checkExists())
-                    std::cout << "Your owo is already initialized !\n";
-                else
-                    f.createFile();
-                f.closeFile();
+                initFile();
                 break;
 
             case add:
@@ -120,6 +117,15 @@ bool checkIfFileIsInitialized() {
     return 0;
 }
 
+void initFile() {
+    File f;
+    if (f.checkExists())
+        std::cout << "Your owo is already initialized !\n";
+    else
+        f.createFile();
+    f.closeFile();
+}
+
 void readAndParseFile(Controller &c) {
     File f;
     f.openFileForReading();
@@ -141,5 +147,4 @@ void cleanMemory(Controller &c) {
     }
 }
 
-// udelat init sectionId funkci
 // delsi jmeno u sekce dela problem

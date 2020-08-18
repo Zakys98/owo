@@ -19,10 +19,13 @@ void Controller::checkSameSectionName() {
     }
 }
 
+void Controller::deleteLast() { sections.erase(sections.end()); }
+
 void Controller::addSection(Section &s) { sections.push_back(s); }
 
 void Controller::addTextToSectionDecision(char **argv) {
-    if (isThirdArgumentInt(argv)) {
+    thirdArgumentStrtol(argv[2]);
+    if (isThirdArgumentInt()) {
         checkExistSectionName();
         addTextToSection(argv[3]);
     } else {
@@ -31,12 +34,15 @@ void Controller::addTextToSectionDecision(char **argv) {
     }
 }
 
-bool Controller::isThirdArgumentInt(char **argv) {
+void Controller::thirdArgumentStrtol(char *argv) {
     ptr = nullptr;
-    sectionId = strtol(argv[2], &ptr, 10);
+    sectionId = strtol(argv, &ptr, 10);
+}
+
+bool Controller::isThirdArgumentInt(){
     if (strlen(ptr) == 0) return true;
     return false;
-}
+} 
 
 void Controller::checkExistSectionName() {
     for (unsigned int i = 0; i < sectionsSize(); i++) {
@@ -58,13 +64,12 @@ void Controller::addTextToSection(char *text) {
 }
 
 void Controller::printDecision(int argc, char **argv) {
-    ptr = nullptr;
-    sectionId = strtol(argv[2], &ptr, 10);
+    thirdArgumentStrtol(argv[2]);
     if (argc == 3) {
         if (strcmp(argv[2], "--sections") == 0) {
             printAllSections();
         } else {
-            if (strlen(ptr) == 0) {
+            if (isThirdArgumentInt()) {
                 checkExistSectionName();
                 printSection();
             } else {
@@ -75,7 +80,7 @@ void Controller::printDecision(int argc, char **argv) {
     } else if (argc == 4) {
         int line = strtol(argv[3], nullptr, 10);
         // dodelat kontrolu jestli je line cislo
-        if (strlen(ptr) == 0) {
+        if (isThirdArgumentInt()) {
             checkExistSectionName();
             printLineOfSection(line);
         } else {
@@ -110,17 +115,16 @@ void Controller::printLineOfSection(int line) {
 }
 
 void Controller::deleteDecision(int argc, char **argv) {
-    ptr = nullptr;
-    sectionId = strtol(argv[2], &ptr, 10);
+   thirdArgumentStrtol(argv[2]);
     if (argc == 3) {
-        if (strlen(ptr) == 0) {
+        if (isThirdArgumentInt()) {
             checkExistSectionName();
             deleteMemoryLeaksSection();
-            deleteSpecificSection(sectionId);
+            deleteSection();
         } else {
             sectionId = checkExistSectionName(argv[2]);
             deleteMemoryLeaksSection();
-            deleteSpecificSection(sectionId);
+            deleteSection();
         }
         changeSectionsIdAfterDelete();
     } else if (argc == 4) {
@@ -143,8 +147,8 @@ void Controller::changeSectionsIdAfterDelete() {
     for (unsigned int i = 0; i < sections.size(); i++) sections[i].setId(i);
 }
 
-void Controller::deleteSpecificSection(int whichSection) {
-    sections.erase(sections.begin() + whichSection);
+void Controller::deleteSection() {
+    sections.erase(sections.begin() + sectionId);
 }
 
 void Controller::deleteLineOfSection(int line) {
@@ -174,5 +178,3 @@ std::vector<Section> Controller::getSections() { return sections; }
 unsigned int Controller::sectionsSize(){
     return sections.size();
 }
-
-void Controller::deleteLast() { sections.erase(sections.end()); }

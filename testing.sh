@@ -5,6 +5,7 @@ number=1
 Color_Off='\033[0m'
 IBlue='\033[0;94m'
 IYellow='\033[0;93m'
+IRed='\033[0;91m'  
 
 # Test cases
 EXP1="./testing/case#1"
@@ -24,6 +25,7 @@ EXPsectionDoesntExist="./testing/case#SectionDoesntExist"
 EXP16="./testing/case#16"
 EXPsectionTextDoesntExist="./testing/case#sectionTextDoesntExist"
 
+echo -e "\n${IRed}Testing local owo${Color_Off}\n"
 #Before start
 ./owo clean
 
@@ -116,6 +118,69 @@ diff -s $EXPsectionTextDoesntExist <(./owo d 1 3)
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (delete section text)${Color_Off}"
 ./owo d 1 0
 diff -s $EXPsectionTextDoesntExist <(./owo delete 1 0)
+((number++))
+
+echo -e "\n${IRed}Testing global owo${Color_Off}\n"
+#Before start
+owo clean
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print help text)${Color_Off}"
+diff -u -s $EXP1 <(owo help)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (initialize document.txt))${Color_Off}"
+owo init
+diff -u -s $EXP2 <(ls)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (clean document.txt)${Color_Off}"
+owo clean
+diff -u -s $EXP3 <(ls)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (initialize owo again)${Color_Off}"
+owo init
+diff -u -s $EXP4 <(owo init)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add section)${Color_Off}"
+owo add first
+diff -s document.txt $EXP5
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add more sections)${Color_Off}"
+owo add second
+owo add third
+owo add fourth
+diff -s document.txt $EXP6
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add text to section by id)${Color_Off}"
+owo add 2 "ahoj"
+diff -s document.txt $EXP7
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add text to section by name)${Color_Off}"
+owo add first "dalsi text na test"
+diff -s document.txt $EXP8
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add more texts to section)${Color_Off}"
+owo add second "run all tests"
+owo add second "NO duplicates"
+owo add 1 "express programer means good names atd"
+owo add 1 "minimalize classes, methods, functions"
+owo add 3 "tesssssss"
+owo add fourth "lalalal"
+diff -s document.txt $EXP9
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print sections)${Color_Off}"
+diff -u -s $EXP10 <(owo print --sections)
+((number++))
+
+echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (same section name)${Color_Off}"
+diff -u -s $EXP11 <(owo add second)
 ((number++))
 
 #clear document.txt
