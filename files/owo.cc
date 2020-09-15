@@ -22,6 +22,7 @@ void cleanMemory(Controller &);
 void initFile();
 
 int main(int argc, char **argv) {
+    std::cout << argc << "\n";
     if (argc >= 2 && argc < 5) {
         int swi = argumentsParser(argv);
         Controller c;

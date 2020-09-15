@@ -267,9 +267,9 @@ diff -s $EXPsectionTextDoesntExist <(owo delete 1 0)
 ./owo add git "git undo last commit                 - delete last commit"
 ./owo add git "git clone <url> <folder>             - clone repository to folder from remote server"
 ./owo add git "git remote add origin <url>          - create connection with remote repository"
-./owo add git "git push -u origin <branch>          - push first commit to remote repository (next commits whithout -u)"
+./owo add git "git push -u origin <branch>          - push first commit to remote repository (next commits without -u)"
 ./owo add git "git pull origin <branch>             - get code updates from remote repository"
-./owo add git "git remote status                    - get commits update from remote repository"
+./owo add git "git remote update                    - get commits update from remote repository"
 ./owo add git "git whatchanged origin/master -n 1   - what changed on remote repository"
 ./owo add git "git branch                           - shows all branches in this program"
 ./owo add git "git branch <name>                    - create new branch with name"
@@ -280,3 +280,8 @@ diff -s $EXPsectionTextDoesntExist <(owo delete 1 0)
 
 ./owo add markdown
 ./owo add markdown "altGR + h == `` "
+
+./owo add npm
+./owo add npm "npm init - init repository"
+./owo add npm "npm search - search for package"
+./owo add npm "npm install - install package"
