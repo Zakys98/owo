@@ -144,3 +144,5 @@ diff -s $EXPsectionTextDoesntExist <(./owo delete 1 0)
 ./owo add git "git switch <branch>                  -   ---||---"
 ./owo add git "git merge <branch>                   - copy branch to master"
 ./owo add git "git rebase <branch>                  - copy branch to master and destroy this branch"
+
+./owo
