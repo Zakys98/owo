@@ -268,7 +268,8 @@ diff -s $EXPsectionTextDoesntExist <(owo delete 1 0)
 ./owo add git "git clone <url> <folder>             - clone repository to folder from remote server"
 ./owo add git "git remote add origin <url>          - create connection with remote repository"
 ./owo add git "git push -u origin <branch>          - push first commit to remote repository (next commits without -u)"
-./owo add git "git pull origin <branch>             - get code updates from remote repository"
+./owo add git "git pull origin <branch>             - download changes from remote repository with merge"
+./owo add git "git fetch                            - download changes from remote repository without merge"
 ./owo add git "git remote update                    - get commits update from remote repository"
 ./owo add git "git whatchanged origin/master -n 1   - what changed on remote repository"
 ./owo add git "git branch                           - shows all branches in this program"
@@ -277,7 +278,6 @@ diff -s $EXPsectionTextDoesntExist <(owo delete 1 0)
 ./owo add git "git switch <branch>                  -   ---||---"
 ./owo add git "git merge <branch>                   - copy branch to master"
 ./owo add git "git rebase <branch>                  - copy branch to master and destroy this branch"
-
 ./owo add git "git mergetool                        - tool for solving conflicts"
 
 ./owo add markdown
@@ -287,5 +287,8 @@ diff -s $EXPsectionTextDoesntExist <(owo delete 1 0)
 ./owo add npm "npm init - init repository"
 ./owo add npm "npm search - search for package"
 ./owo add npm "npm install - install package"
+./owo add npm "npm outdated - show versions of packages"
+./owo add npm "npm update <package> - update version of package"
 
-
+./owo add phpmyadmin
+./owo add phpmyadmin "user: zak, password: 1234"
