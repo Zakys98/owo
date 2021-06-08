@@ -17,7 +17,7 @@ void Section::setName(std::string name) {
     this->name = name;
 }
 
-std::vector<Data *> Section::getData() const {
+std::vector<Data>& Section::getData() {
     return data;
 }
 
@@ -30,18 +30,19 @@ void Section::setNumberOfDataLines(int number) {
 }
 
 void Section::insertData(char *text) {
-    Data *d = new Data;
-    d->setText(text);
-    d->setId(numberOfDataLines);
+    //Data *d = new Data;
+    Data d;
+    d.setText(text);
+    d.setId(numberOfDataLines);
     incNumberOfDataLines();
-    data.push_back(d);
+    insertData(d);
 }
 
 void Section::incNumberOfDataLines() {
     numberOfDataLines++;
 }
 
-void Section::insertData(Data *d) {
+void Section::insertData(Data d) {
     data.push_back(d);
 }
 

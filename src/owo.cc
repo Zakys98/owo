@@ -141,10 +141,10 @@ void openAndWriteToFile(Controller &c) {
 }
 
 void cleanMemory(Controller &c) {
-    for (unsigned int i = 0; i < c.getSections().size(); i++) {
+    /*for (unsigned int i = 0; i < c.getSections().size(); i++) {
         for (unsigned int j = 0; j < c.getSections()[i].getData().size(); j++)
             delete c.getSections()[i].getData()[j];
-    }
+    }*/
 }
 
 // delsi jmeno u sekce dela problem

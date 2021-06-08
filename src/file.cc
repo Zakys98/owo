@@ -1,5 +1,7 @@
 #include "../include/file.h"
 
+#include <filesystem>
+
 bool File::checkExists() { return std::filesystem::exists(name); }
 
 void File::createFile() { file.open(name, std::fstream::out); }
@@ -26,8 +28,8 @@ void File::writeToFile(Controller &c) {
              << c.getSections()[i].getName() << " "
              << c.getSections()[i].getNumberOfDataLines() << std::endl;
         for (unsigned int j = 0; j < c.getSections()[i].getDataSize(); j++) {
-            file << c.getSections()[i].getData()[j]->getId() << " "
-                 << c.getSections()[i].getData()[j]->getText() << std::endl;
+            file << c.getSections()[i].getData()[j].getId() << " "
+                 << c.getSections()[i].getData()[j].getText() << std::endl;
         }
     }
 }
@@ -55,9 +57,10 @@ void File::parseSectionText(Section &s, int numberOfLines) {
         getline(file, pom);
         std::string id = pom.substr(0, pom.find(" "));
         std::string text = pom.substr(pom.find(" ") + 1, pom.length());
-        Data *d = new Data;
-        d->setId(stoi(id));
-        d->setText(text);
+        //Data *d = new Data;
+        Data d;
+        d.setId(stoi(id));
+        d.setText(text);
         s.insertData(d);
     }
 }

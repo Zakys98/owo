@@ -103,8 +103,8 @@ void Controller::printAllSections() {
 void Controller::printSection() {
     printSectionIdAndName();
     for (int j = 0; j < sections[sectionId].getNumberOfDataLines(); j++) {
-        std::cout << "  " << sections[sectionId].getData()[j]->getId() << " "
-                  << sections[sectionId].getData()[j]->getText() << "\n";
+        std::cout << "  " << sections[sectionId].getData()[j].getId() << " "
+                  << sections[sectionId].getData()[j].getText() << "\n";
     }
 }
 
@@ -114,8 +114,8 @@ void Controller::printSectionIdAndName() {
 }
 
 void Controller::printLineOfSection(int line) {
-    std::cout << sections[sectionId].getData()[line]->getId() << " "
-              << sections[sectionId].getData()[line]->getText() << "\n";
+    std::cout << sections[sectionId].getData()[line].getId() << " "
+              << sections[sectionId].getData()[line].getText() << "\n";
 }
 
 void Controller::deleteDecision(int argc, char **argv) {
@@ -158,20 +158,20 @@ void Controller::deleteSection() {
 }
 
 void Controller::deleteLineOfSection(int line) {
-    Data *d = sections[sectionId].getData()[line];
-    delete d;
-    d = nullptr;
+    //Data *d = sections[sectionId].getData()[line];
+    //delete d;
+    //d = nullptr;
     sections[sectionId].deleteData(line);
 }
 
 void Controller::deleteMemoryLeaksSection() {
-    for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
-        delete sections[sectionId].getData()[i];
+    //for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
+    //    delete sections[sectionId].getData()[i];
 }
 
 void Controller::changeSectionTextsIdAfterDelete() {
     for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
-        sections[sectionId].getData()[i]->setId(i);
+        sections[sectionId].getData()[i].setId(i);
 }
 
 void Controller::checkIfSectionTextExists(int line) {

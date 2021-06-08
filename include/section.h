@@ -10,8 +10,7 @@ class Section{
     private:
         int id;
         std::string name;
-        std::vector<Data*> data;
-        //std::vector<std::unique_ptr<Data>> data;
+        std::vector<Data> data;
         int numberOfDataLines;
         void incNumberOfDataLines();
         void decNumberOfDatalines();
@@ -24,9 +23,9 @@ class Section{
         void setName(std::string);
         int getNumberOfDataLines();
         void setNumberOfDataLines(int);
-        std::vector<Data*> getData() const;
+        std::vector<Data>& getData();
         void insertData(char*);
-        void insertData(Data *);
+        void insertData(Data);
         void deleteData(int);
         unsigned int getDataSize();
 };
