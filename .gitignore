@@ -1,4 +1,4 @@
 document.txt
 .vscode/
-files/*.o
+src/*.o
 owo
