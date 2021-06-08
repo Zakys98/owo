@@ -1,8 +1,8 @@
 #include <cstring>
 #include <iostream>
 
-#include "../headers/controller.h"
-#include "../headers/file.h"
+#include "../include/controller.h"
+#include "../include/file.h"
 
 enum commands { init, add, delet, help, clean, print };
 

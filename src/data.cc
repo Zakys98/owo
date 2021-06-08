@@ -1,4 +1,4 @@
-#include "../headers/data.h"
+#include "../include/data.h"
 
 int Data::getId() { return id; }
 void Data::setId(int id) { this->id = id; }

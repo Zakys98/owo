@@ -1,4 +1,4 @@
-#include "../headers/file.h"
+#include "../include/file.h"
 
 bool File::checkExists() { return std::filesystem::exists(name); }
 

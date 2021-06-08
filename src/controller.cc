@@ -1,4 +1,4 @@
-#include "../headers/controller.h"
+#include "../include/controller.h"
 
 void Controller::addSection(char **argv) {
     Section s;
@@ -64,7 +64,7 @@ void Controller::addTextToSection(char *text) {
 }
 
 void Controller::printDecision(int argc, char **argv) {
-    if(argc == 2)
+    if (argc == 2)
         throw "Missing argument!\n";
     thirdArgumentStrtol(argv[2]);
     if (argc == 3) {
@@ -119,7 +119,7 @@ void Controller::printLineOfSection(int line) {
 }
 
 void Controller::deleteDecision(int argc, char **argv) {
-    if(argc == 2)
+    if (argc == 2)
         throw "Missing argument!\n";
     thirdArgumentStrtol(argv[2]);
     if (argc == 3) {

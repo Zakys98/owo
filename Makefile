@@ -1,25 +1,28 @@
-CPPFLAGS = -std=c++17 -Werror -Wextra -pedantic -g
-FILES = files/file.o files/owo.o files/section.o files/controller.o files/data.o
+CC := g++
+CPPFLAGS := -std=c++17 -Werror -Wextra -pedantic -g
+TARGET := owo
+SRC_DIR := src
+FILES := $(SRC_DIR)/file.o $(SRC_DIR)/owo.o $(SRC_DIR)/section.o $(SRC_DIR)/controller.o $(SRC_DIR)/data.o
 
-all: owo
+all: $(TARGET)
 
-owo: $(FILES)
-	g++ $(CPPFLAGS) $(FILES) -o owo -lstdc++fs
+$(TARGET): $(FILES)
+	$(CC) $(CPPFLAGS) $(FILES) -o $(TARGET) -lstdc++fs
 
-files/file.o: files/file.cc
-	g++ $(CPPFLAGS) -c files/file.cc -o files/file.o -lstdc++fs
+$(SRC_DIR)/file.o: $(SRC_DIR)/file.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/file.cc -o $(SRC_DIR)/file.o -lstdc++fs
 
-files/owo.o: files/owo.cc
-	g++ $(CPPFLAGS) -c files/owo.cc -o files/owo.o
+$(SRC_DIR)/owo.o: $(SRC_DIR)/owo.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/owo.cc -o $(SRC_DIR)/owo.o
 
-files/section.o: files/section.cc
-	g++ $(CPPFLAGS) -c files/section.cc -o files/section.o
+$(SRC_DIR)/section.o: $(SRC_DIR)/section.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/section.cc -o $(SRC_DIR)/section.o
 
-files/controller.o: files/controller.cc
-	g++ $(CPPFLAGS) -c files/controller.cc -o files/controller.o
+$(SRC_DIR)/controller.o: $(SRC_DIR)/controller.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/controller.cc -o $(SRC_DIR)/controller.o
 
-files/data.o: files/data.cc
-	g++ $(CPPFLAGS) -c files/data.cc -o files/data.o
+$(SRC_DIR)/data.o: $(SRC_DIR)/data.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/data.cc -o $(SRC_DIR)/data.o
 
 clean:
-	rm owo files/*.o
+	rm -f $(TARGET) $(SRC_DIR)/*.o
