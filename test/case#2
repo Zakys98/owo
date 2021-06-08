@@ -1,8 +1,8 @@
 document.txt
-files
-headers
+include
 Makefile
 owo
 README.md
-testing
+src
+test
 testing.sh
