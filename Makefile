@@ -2,27 +2,32 @@ CC := g++
 CPPFLAGS := -std=c++17 -Werror -Wextra -pedantic -g
 TARGET := owo
 SRC_DIR := src
-FILES := $(SRC_DIR)/file.o $(SRC_DIR)/owo.o $(SRC_DIR)/section.o $(SRC_DIR)/controller.o $(SRC_DIR)/data.o
+BUILD_DIR := build
+FILES := $(BUILD_DIR)/file.o $(BUILD_DIR)/owo.o $(BUILD_DIR)/section.o $(BUILD_DIR)/controller.o $(BUILD_DIR)/data.o
 
-all: $(TARGET)
+all: $(BUILD_DIR) $(TARGET)
 
 $(TARGET): $(FILES)
 	$(CC) $(CPPFLAGS) $(FILES) -o $(TARGET) -lstdc++fs
 
-$(SRC_DIR)/file.o: $(SRC_DIR)/file.cc
-	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/file.cc -o $(SRC_DIR)/file.o -lstdc++fs
+$(BUILD_DIR)/file.o: $(SRC_DIR)/file.cc
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/file.cc -o $(BUILD_DIR)/file.o -lstdc++fs
 
-$(SRC_DIR)/owo.o: $(SRC_DIR)/owo.cc
-	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/owo.cc -o $(SRC_DIR)/owo.o
+$(BUILD_DIR)/owo.o: $(SRC_DIR)/owo.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/owo.cc -o $(BUILD_DIR)/owo.o
 
-$(SRC_DIR)/section.o: $(SRC_DIR)/section.cc
-	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/section.cc -o $(SRC_DIR)/section.o
+$(BUILD_DIR)/section.o: $(SRC_DIR)/section.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/section.cc -o $(BUILD_DIR)/section.o
 
-$(SRC_DIR)/controller.o: $(SRC_DIR)/controller.cc
-	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/controller.cc -o $(SRC_DIR)/controller.o
+$(BUILD_DIR)/controller.o: $(SRC_DIR)/controller.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/controller.cc -o $(BUILD_DIR)/controller.o
 
-$(SRC_DIR)/data.o: $(SRC_DIR)/data.cc
-	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/data.cc -o $(SRC_DIR)/data.o
+$(BUILD_DIR)/data.o: $(SRC_DIR)/data.cc
+	$(CC) $(CPPFLAGS) -c $(SRC_DIR)/data.cc -o $(BUILD_DIR)/data.o
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 clean:
-	rm -f $(TARGET) $(SRC_DIR)/*.o
+	rm -f $(TARGET) $(BUILD_DIR)/*.o

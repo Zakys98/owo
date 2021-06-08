@@ -1,4 +1,4 @@
 document.txt
 .vscode/
-src/*.o
+build/
 owo
