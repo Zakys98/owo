@@ -18,7 +18,6 @@ int argumentsParser(char **);
 bool checkIfFileIsInitialized();
 void readAndParseFile(Controller &);
 void openAndWriteToFile(Controller &);
-void cleanMemory(Controller &);
 void initFile();
 
 int main(int argc, char **argv) {
@@ -87,7 +86,6 @@ int main(int argc, char **argv) {
                 std::cout << tryText;
                 break;
         }
-        cleanMemory(c);
     } else
         std::cout << tryText;
 
@@ -138,13 +136,6 @@ void openAndWriteToFile(Controller &c) {
     f.openFileForWriting();
     f.writeToFile(c);
     f.closeFile();
-}
-
-void cleanMemory(Controller &c) {
-    /*for (unsigned int i = 0; i < c.getSections().size(); i++) {
-        for (unsigned int j = 0; j < c.getSections()[i].getData().size(); j++)
-            delete c.getSections()[i].getData()[j];
-    }*/
 }
 
 // delsi jmeno u sekce dela problem

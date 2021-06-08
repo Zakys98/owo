@@ -24,7 +24,6 @@ class Controller {
     void changeSectionTextsIdAfterDelete();
     void deleteLast();
     void deleteLineOfSection(int);
-    void deleteMemoryLeaksSection();
     void checkIfSectionTextExists(int);
     void thirdArgumentStrtol(char *);
     bool isThirdArgumentInt();

@@ -125,11 +125,9 @@ void Controller::deleteDecision(int argc, char **argv) {
     if (argc == 3) {
         if (isThirdArgumentInt()) {
             checkExistSectionName();
-            deleteMemoryLeaksSection();
             deleteSection();
         } else {
             sectionId = checkExistSectionName(argv[2]);
-            deleteMemoryLeaksSection();
             deleteSection();
         }
         changeSectionsIdAfterDelete();
@@ -158,15 +156,7 @@ void Controller::deleteSection() {
 }
 
 void Controller::deleteLineOfSection(int line) {
-    //Data *d = sections[sectionId].getData()[line];
-    //delete d;
-    //d = nullptr;
     sections[sectionId].deleteData(line);
-}
-
-void Controller::deleteMemoryLeaksSection() {
-    //for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
-    //    delete sections[sectionId].getData()[i];
 }
 
 void Controller::changeSectionTextsIdAfterDelete() {
