@@ -40,8 +40,7 @@ void Controller::thirdArgumentStrtol(char *argv) {
 }
 
 bool Controller::isThirdArgumentInt() {
-    if (strlen(ptr) == 0) return true;
-    return false;
+    return strlen(ptr) == 0 ? true : false;
 }
 
 void Controller::checkExistSectionName() {

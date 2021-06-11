@@ -23,13 +23,15 @@ void File::removeFile() {
 }
 
 void File::writeToFile(Controller &c) {
-    for (unsigned int i = 0; i < c.getSectionsSize(); i++) {
-        file << c.getSections()[i].getId() << " "
-             << c.getSections()[i].getName() << " "
-             << c.getSections()[i].getNumberOfDataLines() << std::endl;
+    unsigned int sectionSize = c.getSectionsSize();
+    for (unsigned int i = 0; i < sectionSize; i++) {
+        Section s = c.getSections()[i]; 
+        file << s.getId() << " "
+             << s.getName() << " "
+             << s.getNumberOfDataLines() << std::endl;
         for (unsigned int j = 0; j < c.getSections()[i].getDataSize(); j++) {
-            file << c.getSections()[i].getData()[j].getId() << " "
-                 << c.getSections()[i].getData()[j].getText() << std::endl;
+            file << s.getData()[j].getId() << " "
+                 << s.getData()[j].getText() << std::endl;
         }
     }
 }
@@ -57,7 +59,6 @@ void File::parseSectionText(Section &s, int numberOfLines) {
         getline(file, pom);
         std::string id = pom.substr(0, pom.find(" "));
         std::string text = pom.substr(pom.find(" ") + 1, pom.length());
-        //Data *d = new Data;
         Data d;
         d.setId(stoi(id));
         d.setText(text);

@@ -30,7 +30,6 @@ void Section::setNumberOfDataLines(int number) {
 }
 
 void Section::insertData(char *text) {
-    //Data *d = new Data;
     Data d;
     d.setText(text);
     d.setId(numberOfDataLines);
