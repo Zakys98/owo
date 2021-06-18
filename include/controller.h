@@ -11,7 +11,7 @@ class Controller {
     std::vector<Section> sections;
     int sectionId;
     char *ptr;
-    void checkSameSectionName();
+    void checkSameSectionName(std::string name);
     void checkExistSectionName();
     int checkExistSectionName(char *);
     void addTextToSection(char *);
@@ -22,7 +22,6 @@ class Controller {
     void deleteSection();
     void changeSectionsIdAfterDelete();
     void changeSectionTextsIdAfterDelete();
-    void deleteLast();
     void deleteLineOfSection(int);
     void checkIfSectionTextExists(int);
     void thirdArgumentStrtol(char *);

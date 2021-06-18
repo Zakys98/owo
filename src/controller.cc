@@ -2,24 +2,21 @@
 
 void Controller::addSection(char **argv) {
     Section s;
-    std::string str(argv[2]);
-    s.setName(str);
+    std::string name(argv[2]);
+    checkSameSectionName(name);
+    s.setName(name);
     s.setId(sections.size());
     sections.push_back(s);
-    checkSameSectionName();
 }
 
-void Controller::checkSameSectionName() {
+void Controller::checkSameSectionName(std::string name) {
     if (sections.empty()) return;
-    for (unsigned int i = 0; i < getSectionsSize() - 1; i++) {
-        if (sections[i].getName() == sections[getSectionsSize() - 1].getName()) {
-            deleteLast();
+    for(auto &section : sections){
+        if(section.getName() == name){       
             throw "Same section name\n";
         }
     }
 }
-
-void Controller::deleteLast() { sections.erase(sections.end()); }
 
 void Controller::addSection(Section &s) { sections.push_back(s); }
 

@@ -111,8 +111,7 @@ int argumentsParser(char **arg) {
 
 bool checkIfFileIsInitialized() {
     File f;
-    if (f.checkExists()) return 1;
-    return 0;
+    return f.checkExists();
 }
 
 void initFile() {
