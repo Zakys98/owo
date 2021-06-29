@@ -11,8 +11,8 @@ void Controller::addSection(char **argv) {
 
 void Controller::checkSameSectionName(std::string name) {
     if (sections.empty()) return;
-    for(auto &section : sections){
-        if(section.getName() == name){       
+    for (auto &section : sections) {
+        if (section.getName() == name) {
             throw "Same section name\n";
         }
     }
@@ -41,16 +41,16 @@ bool Controller::isThirdArgumentInt() {
 }
 
 void Controller::checkExistSectionName() {
-    for (unsigned int i = 0; i < getSectionsSize(); i++) {
-        if (sections[i].getId() == sectionId) return;
+    for (auto &section : sections) {
+        if (section.getId() == sectionId) return;
     }
     throw "Section doesnt exists\n";
 }
 
 int Controller::checkExistSectionName(char *whichSection) {
     std::string name(whichSection);
-    for (unsigned int i = 0; i < getSectionsSize(); i++) {
-        if (sections[i].getName() == name) return sections[i].getId();
+    for (auto &section : sections) {
+        if (section.getName() == name) return section.getId();
     }
     throw "Section doesnt exists\n";
 }

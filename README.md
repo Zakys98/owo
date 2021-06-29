@@ -1,7 +1,7 @@
 # OwO - program pro zkratky
 
 ```
-code here
+to do
 ```
 
 ---
