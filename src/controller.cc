@@ -1,4 +1,5 @@
 #include "../include/controller.h"
+#include "../include/exception.h"
 
 void Controller::addSection(char **argv) {
     Section s;
@@ -44,7 +45,7 @@ void Controller::checkExistSectionName() {
     for (auto &section : sections) {
         if (section.getId() == sectionId) return;
     }
-    throw "Section doesnt exists\n";
+    throw MyException::SectionDoesntExistException();
 }
 
 int Controller::checkExistSectionName(char *whichSection) {
@@ -52,7 +53,7 @@ int Controller::checkExistSectionName(char *whichSection) {
     for (auto &section : sections) {
         if (section.getName() == name) return section.getId();
     }
-    throw "Section doesnt exists\n";
+    throw MyException::SectionDoesntExistException();
 }
 
 void Controller::addTextToSection(char *text) {
@@ -156,13 +157,14 @@ void Controller::deleteLineOfSection(int line) {
 }
 
 void Controller::changeSectionTextsIdAfterDelete() {
-    for (unsigned int i = 0; i < sections[sectionId].getDataSize(); i++)
+    unsigned int size = sections[sectionId].getDataSize();
+    for (unsigned int i = 0; i < size; i++)
         sections[sectionId].getData()[i].setId(i);
 }
 
 void Controller::checkIfSectionTextExists(int line) {
     if ((int)sections[sectionId].getDataSize() <= line || line < 0)
-        throw "Section text doesnt exist\n";
+        throw MyException::SectionTextDoesntExistException();
 }
 
 std::vector<Section> Controller::getSections() { return sections; }

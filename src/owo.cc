@@ -2,9 +2,15 @@
 #include <iostream>
 
 #include "../include/controller.h"
+#include "../include/exception.h"
 #include "../include/file.h"
 
-enum commands { init, add, delet, help, clean, print };
+enum commands { init,
+                add,
+                delet,
+                help,
+                clean,
+                print };
 
 const std::string tryText = "Try : owo help\n";
 const std::string helpText =
@@ -43,7 +49,9 @@ int main(int argc, char **argv) {
                 } else if (argc == 4)
                     try {
                         c.addTextToSectionDecision(argv);
-                    } catch (const char *s) {
+                    } catch (MyException::SectionDoesntExistException &e) {
+                        std::cout << e.what();
+                    } catch (const char *s){
                         std::cout << s;
                     }
 
@@ -56,7 +64,11 @@ int main(int argc, char **argv) {
 
                 try {
                     c.deleteDecision(argc, argv);
-                } catch (const char *s) {
+                } catch (MyException::SectionDoesntExistException &e) {
+                    std::cout << e.what();
+                } catch (MyException::SectionTextDoesntExistException &e) {
+                    std::cout << e.what();
+                } catch (const char *s){
                     std::cout << s;
                 }
 
