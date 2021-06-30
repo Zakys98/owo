@@ -81,7 +81,9 @@ int main(int argc, char **argv) {
                     c.printDecision(argc, argv);
                 } catch (MyException::exceptionMissingArgument &e) {
                     std::cout << e.what();
-                } 
+                } catch (MyException::exceptionSectionTextDoesntExist &e){
+                    std::cout << e.what();
+                }
                 break;
 
             case help:
