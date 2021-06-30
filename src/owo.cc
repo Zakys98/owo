@@ -51,8 +51,6 @@ int main(int argc, char **argv) {
                         c.addTextToSectionDecision(argv);
                     } catch (MyException::exceptionSectionDoesntExist &e) {
                         std::cout << e.what();
-                    } catch (const char *s){
-                        std::cout << s;
                     }
 
                 openAndWriteToFile(c);
@@ -68,9 +66,9 @@ int main(int argc, char **argv) {
                     std::cout << e.what();
                 } catch (MyException::exceptionSectionTextDoesntExist &e) {
                     std::cout << e.what();
-                } catch (const char *s){
-                    std::cout << s;
-                }
+                } catch (MyException::exceptionMissingArgument &e) {
+                    std::cout << e.what();
+                } 
 
                 openAndWriteToFile(c);
                 break;
@@ -81,9 +79,9 @@ int main(int argc, char **argv) {
 
                 try {
                     c.printDecision(argc, argv);
-                } catch (const char *s) {
-                    std::cout << s;
-                }
+                } catch (MyException::exceptionMissingArgument &e) {
+                    std::cout << e.what();
+                } 
                 break;
 
             case help:
@@ -107,7 +105,7 @@ int main(int argc, char **argv) {
 int argumentsParser(char **arg) {
     if (strcmp(arg[1], "init") == 0) {
         return init;
-    } else if (strcmp(arg[1], "add") == 0) {
+    } else if (strcmp(arg[1], "add") == 0 || (strcmp(arg[1], "a") == 0)) {
         return add;
     } else if (strcmp(arg[1], "delete") == 0 || (strcmp(arg[1], "d") == 0)) {
         return delet;

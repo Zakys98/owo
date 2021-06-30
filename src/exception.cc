@@ -11,3 +11,7 @@ const char* MyException::exceptionSectionDoesntExist::what() const noexcept {
 const char* MyException::exceptionSameSectionName::what() const noexcept {
     return "Same section name\n";
 }
+
+const char* MyException::exceptionMissingArgument::what() const noexcept {
+    return "Missing argument!\n";
+}

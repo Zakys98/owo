@@ -29,7 +29,8 @@ void File::writeToFile(Controller &c) {
         file << s.getId() << " "
              << s.getName() << " "
              << s.getNumberOfDataLines() << std::endl;
-        for (unsigned int j = 0; j < c.getSections()[i].getDataSize(); j++) {
+        unsigned int sectionDataSize = s.getDataSize();
+        for (unsigned int j = 0; j < sectionDataSize; j++) {
             file << s.getData()[j].getId() << " "
                  << s.getData()[j].getText() << std::endl;
         }
