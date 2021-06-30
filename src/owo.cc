@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
                 } else if (argc == 4)
                     try {
                         c.addTextToSectionDecision(argv);
-                    } catch (MyException::SectionDoesntExistException &e) {
+                    } catch (MyException::exceptionSectionDoesntExist &e) {
                         std::cout << e.what();
                     } catch (const char *s){
                         std::cout << s;
@@ -64,9 +64,9 @@ int main(int argc, char **argv) {
 
                 try {
                     c.deleteDecision(argc, argv);
-                } catch (MyException::SectionDoesntExistException &e) {
+                } catch (MyException::exceptionSectionDoesntExist &e) {
                     std::cout << e.what();
-                } catch (MyException::SectionTextDoesntExistException &e) {
+                } catch (MyException::exceptionSectionTextDoesntExist &e) {
                     std::cout << e.what();
                 } catch (const char *s){
                     std::cout << s;
