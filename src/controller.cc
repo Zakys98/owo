@@ -14,7 +14,7 @@ void Controller::checkSameSectionName(std::string name) {
     if (sections.empty()) return;
     for (auto &section : sections) {
         if (section.getName() == name) {
-            throw "Same section name\n";
+            throw MyException::exceptionSameSectionName();
         }
     }
 }
@@ -45,7 +45,7 @@ void Controller::checkExistSectionName() {
     for (auto &section : sections) {
         if (section.getId() == sectionId) return;
     }
-    throw MyException::SectionDoesntExistException();
+    throw MyException::exceptionSectionDoesntExist();
 }
 
 int Controller::checkExistSectionName(char *whichSection) {
@@ -53,7 +53,7 @@ int Controller::checkExistSectionName(char *whichSection) {
     for (auto &section : sections) {
         if (section.getName() == name) return section.getId();
     }
-    throw MyException::SectionDoesntExistException();
+    throw MyException::exceptionSectionDoesntExist();
 }
 
 void Controller::addTextToSection(char *text) {
@@ -164,7 +164,7 @@ void Controller::changeSectionTextsIdAfterDelete() {
 
 void Controller::checkIfSectionTextExists(int line) {
     if ((int)sections[sectionId].getDataSize() <= line || line < 0)
-        throw MyException::SectionTextDoesntExistException();
+        throw MyException::exceptionSectionTextDoesntExist();
 }
 
 std::vector<Section> Controller::getSections() { return sections; }

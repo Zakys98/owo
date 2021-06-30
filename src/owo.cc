@@ -43,8 +43,8 @@ int main(int argc, char **argv) {
                 if (argc == 3) {
                     try {
                         c.addSection(argv);
-                    } catch (const char *s) {
-                        std::cout << s;
+                    } catch (MyException::exceptionSameSectionName &e) {
+                        std::cout << e.what();
                     }
                 } else if (argc == 4)
                     try {
