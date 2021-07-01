@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
                     std::cout << e.what();
                 } catch (MyException::exceptionMissingArgument &e) {
                     std::cout << e.what();
-                } 
+                }
 
                 openAndWriteToFile(c);
                 break;
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
                     c.printDecision(argc, argv);
                 } catch (MyException::exceptionMissingArgument &e) {
                     std::cout << e.what();
-                } catch (MyException::exceptionSectionTextDoesntExist &e){
+                } catch (MyException::exceptionSectionTextDoesntExist &e) {
                     std::cout << e.what();
                 }
                 break;
@@ -105,19 +105,19 @@ int main(int argc, char **argv) {
 }
 
 int argumentsParser(char **arg) {
-    if (strcmp(arg[1], "init") == 0) {
+    if (strcmp(arg[1], "init") == 0)
         return init;
-    } else if (strcmp(arg[1], "add") == 0 || (strcmp(arg[1], "a") == 0)) {
+    else if (strcmp(arg[1], "add") == 0 || (strcmp(arg[1], "a") == 0))
         return add;
-    } else if (strcmp(arg[1], "delete") == 0 || (strcmp(arg[1], "d") == 0)) {
+    else if (strcmp(arg[1], "delete") == 0 || (strcmp(arg[1], "d") == 0))
         return delet;
-    } else if (strcmp(arg[1], "help") == 0) {
+    else if (strcmp(arg[1], "help") == 0)
         return help;
-    } else if ((strcmp(arg[1], "print") == 0) || (strcmp(arg[1], "p") == 0)) {
+    else if ((strcmp(arg[1], "print") == 0) || (strcmp(arg[1], "p") == 0))
         return print;
-    } else if (strcmp(arg[1], "clean") == 0) {
+    else if (strcmp(arg[1], "clean") == 0)
         return clean;
-    }
+
     return -1;
 }
 
