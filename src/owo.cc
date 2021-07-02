@@ -20,102 +20,110 @@ const std::string helpText =
     "owo print  --sections  - prints all sections\n"
     "owo clean\n";
 
-int argumentsParser(char **);
+int argumentsParser(std::string &);
 bool checkIfFileIsInitialized();
 void readAndParseFile(Controller &);
 void openAndWriteToFile(Controller &);
 void initFile();
+void removeFile();
 
 int main(int argc, char **argv) {
-    if (argc >= 2 && argc < 5) {
-        int swi = argumentsParser(argv);
-        Controller c;
-        File f;
-        switch (swi) {
-            case init:
-                initFile();
-                break;
+    std::vector<std::string> all_args(argv + 1, argv + argc);
+    if (all_args.size() < 2 || all_args.size() > 5) {
+        std::cout << tryText;
+        return 0;
+    }
 
-            case add:
-                if (!checkIfFileIsInitialized()) break;
-                readAndParseFile(c);
+    int swi = argumentsParser(all_args[0]);
+    Controller c;
+    switch (swi) {
+        case init:
+            initFile();
+            break;
 
-                if (argc == 3) {
-                    try {
-                        c.addSection(argv);
-                    } catch (MyException::exceptionSameSectionName &e) {
-                        std::cout << e.what();
-                    }
-                } else if (argc == 4)
-                    try {
-                        c.addTextToSectionDecision(argv);
-                    } catch (MyException::exceptionSectionDoesntExist &e) {
-                        std::cout << e.what();
-                    }
+        case add:
+            if (!checkIfFileIsInitialized()) break;
+            readAndParseFile(c);
 
-                openAndWriteToFile(c);
-                break;
-
-            case delet:
-                if (!checkIfFileIsInitialized()) break;
-                readAndParseFile(c);
-
+            if (argc == 3) {
                 try {
-                    c.deleteDecision(argc, argv);
+                    c.addSection(argv);
+                } catch (MyException::exceptionSameSectionName &e) {
+                    std::cout << e.what();
+                }
+            } else if (argc == 4)
+                try {
+                    c.addTextToSectionDecision(argv);
                 } catch (MyException::exceptionSectionDoesntExist &e) {
                     std::cout << e.what();
-                } catch (MyException::exceptionSectionTextDoesntExist &e) {
-                    std::cout << e.what();
-                } catch (MyException::exceptionMissingArgument &e) {
-                    std::cout << e.what();
                 }
 
-                openAndWriteToFile(c);
-                break;
+            openAndWriteToFile(c);
+            break;
 
-            case print:
-                if (!checkIfFileIsInitialized()) break;
-                readAndParseFile(c);
+        case delet:
+            if (!checkIfFileIsInitialized()) break;
+            readAndParseFile(c);
 
-                try {
-                    c.printDecision(argc, argv);
-                } catch (MyException::exceptionMissingArgument &e) {
-                    std::cout << e.what();
-                } catch (MyException::exceptionSectionTextDoesntExist &e) {
-                    std::cout << e.what();
-                }
-                break;
+            try {
+                c.deleteDecision(argc, argv);
+            } catch (MyException::exceptionSectionDoesntExist &e) {
+                std::cout << e.what();
+            } catch (MyException::exceptionSectionTextDoesntExist &e) {
+                std::cout << e.what();
+            } catch (MyException::exceptionMissingArgument &e) {
+                std::cout << e.what();
+            }
 
-            case help:
-                std::cout << helpText;
-                break;
+            openAndWriteToFile(c);
+            break;
 
-            case clean:
-                f.removeFile();
-                break;
+        case print:
+            if (!checkIfFileIsInitialized()) break;
+            readAndParseFile(c);
 
-            default:
-                std::cout << tryText;
-                break;
-        }
-    } else
-        std::cout << tryText;
+            try {
+                c.printDecision(argc, argv);
+            } catch (MyException::exceptionMissingArgument &e) {
+                std::cout << e.what();
+            } catch (MyException::exceptionSectionTextDoesntExist &e) {
+                std::cout << e.what();
+            }
+            break;
+
+        case help:
+            std::cout << helpText;
+            break;
+
+        case clean:
+            removeFile();
+            break;
+
+        default:
+            std::cout << tryText;
+            break;
+    }
 
     return 0;
 }
 
-int argumentsParser(char **arg) {
-    if (strcmp(arg[1], "init") == 0)
+void removeFile() {
+    File f;
+    f.removeFile();
+}
+
+int argumentsParser(std::string &first_argument) {
+    if (first_argument == "init")
         return init;
-    else if (strcmp(arg[1], "add") == 0 || (strcmp(arg[1], "a") == 0))
+    else if (first_argument == "add" || first_argument == "a")
         return add;
-    else if (strcmp(arg[1], "delete") == 0 || (strcmp(arg[1], "d") == 0))
+    else if (first_argument == "delete" || first_argument == "d")
         return delet;
-    else if (strcmp(arg[1], "help") == 0)
+    else if (first_argument == "help")
         return help;
-    else if ((strcmp(arg[1], "print") == 0) || (strcmp(arg[1], "p") == 0))
+    else if (first_argument == "print" || first_argument == "p")
         return print;
-    else if (strcmp(arg[1], "clean") == 0)
+    else if (first_argument == "clean")
         return clean;
 
     return -1;
