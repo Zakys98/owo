@@ -29,7 +29,7 @@ void Section::setNumberOfDataLines(int number) {
     numberOfDataLines = number;
 }
 
-void Section::insertData(char *text) {
+void Section::insertData(std::string &text) {
     Data d;
     d.setText(text);
     d.setId(numberOfDataLines);

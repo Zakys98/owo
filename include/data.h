@@ -12,8 +12,7 @@ class Data{
         int getId();
         void setId(int);
         std::string getText();
-        void setText(char *);
-        void setText(std::string);
+        void setText(std::string &);
 };
 
 #endif

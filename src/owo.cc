@@ -48,13 +48,13 @@ int main(int argc, char **argv) {
 
             if (argc == 3) {
                 try {
-                    c.addSection(argv);
+                    c.addSection(all_args[1]);
                 } catch (MyException::exceptionSameSectionName &e) {
                     std::cout << e.what();
                 }
             } else if (argc == 4)
                 try {
-                    c.addTextToSectionDecision(argv);
+                    c.addTextToSectionDecision(all_args[1], all_args[2]);
                 } catch (MyException::exceptionSectionDoesntExist &e) {
                     std::cout << e.what();
                 }
@@ -63,11 +63,12 @@ int main(int argc, char **argv) {
             break;
 
         case delet:
-            if (!checkIfFileIsInitialized()) break;
+            //if (!checkIfFileIsInitialized()) break;
             readAndParseFile(c);
 
+            all_args.erase(all_args.begin());
             try {
-                c.deleteDecision(argc, argv);
+                c.deleteDecision(all_args);
             } catch (MyException::exceptionSectionDoesntExist &e) {
                 std::cout << e.what();
             } catch (MyException::exceptionSectionTextDoesntExist &e) {
@@ -83,8 +84,9 @@ int main(int argc, char **argv) {
             if (!checkIfFileIsInitialized()) break;
             readAndParseFile(c);
 
+            all_args.erase(all_args.begin());
             try {
-                c.printDecision(argc, argv);
+                c.printDecision(all_args);
             } catch (MyException::exceptionMissingArgument &e) {
                 std::cout << e.what();
             } catch (MyException::exceptionSectionTextDoesntExist &e) {

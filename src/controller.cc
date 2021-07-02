@@ -1,16 +1,16 @@
 #include "../include/controller.h"
+
 #include "../include/exception.h"
 
-void Controller::addSection(char **argv) {
+void Controller::addSection(std::string &name) {
     Section s;
-    std::string name(argv[2]);
     checkSameSectionName(name);
     s.setName(name);
     s.setId(sections.size());
     sections.push_back(s);
 }
 
-void Controller::checkSameSectionName(std::string name) {
+void Controller::checkSameSectionName(std::string &name) {
     if (sections.empty()) return;
     for (auto &section : sections) {
         if (section.getName() == name) {
@@ -21,24 +21,20 @@ void Controller::checkSameSectionName(std::string name) {
 
 void Controller::addSection(Section &s) { sections.push_back(s); }
 
-void Controller::addTextToSectionDecision(char **argv) {
-    thirdArgumentStrtol(argv[2]);
-    if (isThirdArgumentInt()) {
-        checkExistSectionName();
-        addTextToSection(argv[3]);
-    } else {
-        sectionId = checkExistSectionName(argv[2]);
-        addTextToSection(argv[3]);
+void Controller::addTextToSectionDecision(std::string &section, std::string &text) {
+    try {
+        thirdArgumentStrtol(section);
+    } catch (std::invalid_argument &e) {
+        checkExistSectionName(section);
+        addTextToSection(text);
+        return;
     }
+    checkExistSectionName();
+    addTextToSection(text);
 }
 
-void Controller::thirdArgumentStrtol(char *argv) {
-    ptr = nullptr;
-    sectionId = strtol(argv, &ptr, 10);
-}
-
-bool Controller::isThirdArgumentInt() {
-    return strlen(ptr) == 0 ? true : false;
+void Controller::thirdArgumentStrtol(std::string &number) {
+    sectionId = std::stoi(number);
 }
 
 void Controller::checkExistSectionName() {
@@ -48,50 +44,48 @@ void Controller::checkExistSectionName() {
     throw MyException::exceptionSectionDoesntExist();
 }
 
-int Controller::checkExistSectionName(char *whichSection) {
-    std::string name(whichSection);
+void Controller::checkExistSectionName(std::string &name) {
+    sectionId = -1;
     for (auto &section : sections) {
-        if (section.getName() == name) return section.getId();
+        if (section.getName() == name) {
+            sectionId = section.getId();
+            return;
+        }
     }
     throw MyException::exceptionSectionDoesntExist();
 }
 
-void Controller::addTextToSection(char *text) {
+void Controller::addTextToSection(std::string &text) {
     sections[sectionId].insertData(text);
 }
 
-void Controller::printDecision(int argc, char **argv) {
-    if (argc == 2)
+void Controller::printDecision(std::vector<std::string> &argv) {
+    unsigned int size = argv.size();
+    if (size == 0)
         throw MyException::exceptionMissingArgument();
-    thirdArgumentStrtol(argv[2]);
-    if (argc == 3) {
-        if (strcmp(argv[2], "--sections") == 0) {
+    try {
+        thirdArgumentStrtol(argv[0]);
+    } catch (std::invalid_argument &e) {
+        checkExistSectionName(argv[0]);
+    }
+
+    if (size == 1) {
+        if (argv[1] == "--sections")
             printAllSections();
-        } else {
-            if (isThirdArgumentInt()) {
-                checkExistSectionName();
-                printSection();
-            } else {
-                sectionId = checkExistSectionName(argv[2]);
-                printSection();
-            }
-        }
-    } else if (argc == 4) {
-        int line = strtol(argv[3], nullptr, 10);
-        // dodelat kontrolu jestli je line cislo
-        if (isThirdArgumentInt()) {
-            checkExistSectionName();
-            checkIfSectionTextExists(line);
-            printLineOfSection(line);
-        } else {
-            sectionId = checkExistSectionName(argv[2]);
-            printLineOfSection(line);
-        }
+        else
+            printSection();
+
+    } else if (size == 2) {
+        // catch invalid argument u line
+        int line = std::stoi(argv[1]);
+        checkIfSectionTextExists(line);
+        printLineOfSection(line);
     }
 }
 
 void Controller::printAllSections() {
-    for (unsigned int i = 0; i < getSectionsSize(); i++) {
+    unsigned int size = getSectionsSize();
+    for (unsigned int i = 0; i < size; i++) {
         sectionId = i;
         printSectionIdAndName();
     }
@@ -115,37 +109,32 @@ void Controller::printLineOfSection(int line) {
               << sections[sectionId].getData()[line].getText() << "\n";
 }
 
-void Controller::deleteDecision(int argc, char **argv) {
-    if (argc == 2)
+void Controller::deleteDecision(std::vector<std::string> &argv) {
+    unsigned int size = argv.size();
+    if (size == 0)
         throw MyException::exceptionMissingArgument();
-    thirdArgumentStrtol(argv[2]);
-    if (argc == 3) {
-        if (isThirdArgumentInt()) {
-            checkExistSectionName();
-            deleteSection();
-        } else {
-            sectionId = checkExistSectionName(argv[2]);
-            deleteSection();
-        }
+    try {
+        thirdArgumentStrtol(argv[0]);
+        checkExistSectionName();
+    } catch (std::invalid_argument &e) {
+        checkExistSectionName(argv[0]);
+    }
+
+    if (size == 1) {
+        deleteSection();
         changeSectionsIdAfterDelete();
-    } else if (argc == 4) {
-        int line = strtol(argv[3], nullptr, 10);
-        // dodelat kontrolu jestli to je int
-        if (isThirdArgumentInt()) {
-            checkExistSectionName();
-            checkIfSectionTextExists(line);
-            deleteLineOfSection(line);
-        } else {
-            sectionId = checkExistSectionName(argv[2]);
-            checkIfSectionTextExists(line);
-            deleteLineOfSection(line);
-        }
+    } else if (size == 2) {
+        // catch invalid argument u line
+        int line = std::stoi(argv[1]);
+        checkIfSectionTextExists(line);
+        deleteLineOfSection(line);
         changeSectionTextsIdAfterDelete();
     }
 }
 
 void Controller::changeSectionsIdAfterDelete() {
-    for (unsigned int i = 0; i < getSectionsSize(); i++) sections[i].setId(i);
+    int number = 0;
+    for (auto &s : sections) s.setId(number++);
 }
 
 void Controller::deleteSection() {

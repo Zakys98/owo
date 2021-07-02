@@ -11,10 +11,10 @@ class Controller {
     std::vector<Section> sections;
     int sectionId;
     char *ptr;
-    void checkSameSectionName(std::string name);
+    void checkSameSectionName(std::string &);
     void checkExistSectionName();
-    int checkExistSectionName(char *);
-    void addTextToSection(char *);
+    void checkExistSectionName(std::string &);
+    void addTextToSection(std::string &);
     void printAllSections();
     void printSection();
     void printSectionIdAndName();
@@ -24,15 +24,14 @@ class Controller {
     void changeSectionTextsIdAfterDelete();
     void deleteLineOfSection(int);
     void checkIfSectionTextExists(int);
-    void thirdArgumentStrtol(char *);
-    bool isThirdArgumentInt();
+    void thirdArgumentStrtol(std::string &);
 
    public:
-    void addSection(char **);
+    void addSection(std::string &);
     void addSection(Section &); 
-    void addTextToSectionDecision(char **);
-    void printDecision(int, char **);
-    void deleteDecision(int, char **);
+    void addTextToSectionDecision(std::string &, std::string &);
+    void printDecision(std::vector<std::string> &);
+    void deleteDecision(std::vector<std::string> &argv);
     std::vector<Section> getSections();
     unsigned int getSectionsSize();
 };
