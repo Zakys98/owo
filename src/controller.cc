@@ -94,8 +94,8 @@ void Controller::printAllSections() {
 void Controller::printSection() {
     printSectionIdAndName();
     for (int j = 0; j < sections[sectionId].getNumberOfDataLines(); j++) {
-        std::cout << "  " << sections[sectionId].getData()[j].getId() << " "
-                  << sections[sectionId].getData()[j].getText() << "\n";
+        std::cout << "  ";
+        printLineOfSection(j);
     }
 }
 
