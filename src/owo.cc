@@ -10,7 +10,8 @@ enum commands { init,
                 delet,
                 help,
                 clean,
-                print };
+                print,
+                none };
 
 const std::string tryText = "Try : owo help\n";
 const std::string helpText =
@@ -29,7 +30,7 @@ void removeFile();
 
 int main(int argc, char **argv) {
     std::vector<std::string> all_args(argv + 1, argv + argc);
-    if (all_args.size() < 2 || all_args.size() > 5) {
+    if (all_args.size() < 1 || all_args.size() > 4) {
         std::cout << tryText;
         return 0;
     }
@@ -107,11 +108,6 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void removeFile() {
-    File f;
-    f.removeFile();
-}
-
 int argumentsParser(std::string &first_argument) {
     if (first_argument == "init")
         return init;
@@ -126,7 +122,7 @@ int argumentsParser(std::string &first_argument) {
     else if (first_argument == "clean")
         return clean;
 
-    return -1;
+    return none;
 }
 
 bool checkIfFileIsInitialized() {
@@ -155,6 +151,11 @@ void openAndWriteToFile(Controller &c) {
     f.openFileForWriting();
     f.writeToFile(c);
     f.closeFile();
+}
+
+void removeFile() {
+    File f;
+    f.removeFile();
 }
 
 // delsi jmeno u sekce dela problem

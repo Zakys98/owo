@@ -1,5 +1,6 @@
 CC := g++
 CPPFLAGS := -std=c++17 -Werror -Wextra -pedantic -g
+LDFLAGS := -g
 TARGET := owo
 SRC_DIR := src
 BUILD_DIR := build
@@ -8,7 +9,7 @@ FILES := $(BUILD_DIR)/file.o $(BUILD_DIR)/owo.o $(BUILD_DIR)/section.o $(BUILD_D
 all: $(BUILD_DIR) $(TARGET)
 
 $(TARGET): $(FILES)
-	$(CC) $(CPPFLAGS) $(FILES) -o $(TARGET) -lstdc++fs
+	$(CC) $(LDFLAGS) $(FILES) -o $(TARGET) -lstdc++fs
 
 $(BUILD_DIR)/file.o: $(SRC_DIR)/file.cc
 	mkdir -p $(BUILD_DIR)
