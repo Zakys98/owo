@@ -25,7 +25,7 @@ class Section{
         void setNumberOfDataLines(int);
         std::vector<Data>& getData();
         void insertData(std::string &);
-        void insertData(Data);
+        void insertData(Data &);
         void deleteData(int);
         unsigned int getDataSize();
 };

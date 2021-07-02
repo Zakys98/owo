@@ -41,7 +41,7 @@ void Section::incNumberOfDataLines() {
     numberOfDataLines++;
 }
 
-void Section::insertData(Data d) {
+void Section::insertData(Data &d) {
     data.push_back(d);
 }
 
