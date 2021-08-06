@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(owo)
 
-file(GLOB_RECURSE source_list "src/*.cc")
+file(GLOB_RECURSE source_list "src/*.cpp")
 include_directories(include)
 include_directories(cxxopts/include)
 
