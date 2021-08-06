@@ -6,7 +6,7 @@
 #include <iostream>
 
 enum commands {
-    add,
+    add
 };
 
 const std::string tryText = "Try : owo\n";
@@ -82,23 +82,14 @@ static void parseArgOpts(int argc, char **argv) {
         if (!checkIfFileIsInitialized()) return;
         readAndParseFile(c);
         auto &vector_of_args = result["delete"].as<std::vector<std::string>>();
-        try {
-            c.deleteDecision(vector_of_args);
-        } catch (std::exception &e) {
-            std::cout << e.what();
-        }
-
+        c.deleteDecision(vector_of_args);
         openAndWriteToFile(c);
     }
     if (result.count("print")) {
         if (!checkIfFileIsInitialized()) return;
         readAndParseFile(c);
         auto &vector_of_args = result["delete"].as<std::vector<std::string>>();
-        try {
-            c.printDecision(vector_of_args);
-        } catch (std::exception &e) {
-            std::cout << e.what();
-        }
+        c.printDecision(vector_of_args);
     }
     if (result.count("init")) {
         initFile();
@@ -109,7 +100,11 @@ static void parseArgOpts(int argc, char **argv) {
 }
 
 int main(int argc, char **argv) {
-    parseArgOpts(argc, argv);
+    try {
+        parseArgOpts(argc, argv);
+    } catch (std::exception &e) {
+        std::cout << e.what();
+    }
 
     return 0;
 
