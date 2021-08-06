@@ -1,4 +1,4 @@
-#include "../include/exception.h"
+#include <exception.hpp>
 
 const char* MyException::exceptionSectionTextDoesntExist::what() const noexcept {
     return "Section text doesnt exist\n";

@@ -1,5 +1,4 @@
-#ifndef __data_h__
-#define __data_h__
+#pragma once
 
 #include <string>
 
@@ -14,5 +13,3 @@ class Data{
         std::string getText();
         void setText(std::string &);
 };
-
-#endif

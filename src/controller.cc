@@ -1,6 +1,8 @@
-#include "../include/controller.h"
+#include <controller.hpp>
+#include <exception.hpp>
 
-#include "../include/exception.h"
+void Controller::addDecision(const std::vector<std::string> &argv) {
+}
 
 void Controller::addSection(std::string &name) {
     Section s;
@@ -33,7 +35,7 @@ void Controller::addTextToSectionDecision(std::string &section, std::string &tex
     addTextToSection(text);
 }
 
-void Controller::thirdArgumentStrtol(std::string &number) {
+void Controller::thirdArgumentStrtol(const std::string &number) {
     sectionId = std::stoi(number);
 }
 
@@ -44,7 +46,7 @@ void Controller::checkExistSectionName() {
     throw MyException::exceptionSectionDoesntExist();
 }
 
-void Controller::checkExistSectionName(std::string &name) {
+void Controller::checkExistSectionName(const std::string &name) {
     sectionId = -1;
     for (auto &section : sections) {
         if (section.getName() == name) {
@@ -59,10 +61,10 @@ void Controller::addTextToSection(std::string &text) {
     sections[sectionId].insertData(text);
 }
 
-void Controller::printDecision(std::vector<std::string> &argv) {
+void Controller::printDecision(const std::vector<std::string> &argv) {
     unsigned int size = argv.size();
     if (size == 0)
-        throw MyException::exceptionMissingArgument();
+        throw MyException::exceptionMissingArgument();  //navic
     try {
         thirdArgumentStrtol(argv[0]);
     } catch (std::invalid_argument &e) {
@@ -109,10 +111,10 @@ void Controller::printLineOfSection(int line) {
               << sections[sectionId].getData()[line].getText() << "\n";
 }
 
-void Controller::deleteDecision(std::vector<std::string> &argv) {
+void Controller::deleteDecision(const std::vector<std::string> &argv) {
     unsigned int size = argv.size();
     if (size == 0)
-        throw MyException::exceptionMissingArgument();
+        throw MyException::exceptionMissingArgument();  //navic
     try {
         thirdArgumentStrtol(argv[0]);
         checkExistSectionName();

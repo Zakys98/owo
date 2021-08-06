@@ -1,20 +1,18 @@
-#ifndef __file_h__
-#define __file_h__
+#pragma once
+
+#include <controller.hpp>
+#include <data.hpp>
 
 #include <fstream>
 #include <iostream>
-#include <cstring>
-#include "controller.h"
-#include "data.h"
 
 class File {
-
    private:
     std::fstream file;
     std::string name = "document.txt";
-    void parseSectionText(Section &,int);
+    void parseSectionText(Section &, int);
 
-   public: 
+   public:
     bool checkExists();
     void createFile();
     void closeFile();
@@ -23,7 +21,4 @@ class File {
     void removeFile();
     void writeToFile(Controller &);
     void parseFileForController(Controller &);
-    
 };
-
-#endif

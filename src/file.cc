@@ -1,5 +1,4 @@
-#include "../include/file.h"
-
+#include <file.hpp>
 #include <filesystem>
 
 bool File::checkExists() { return std::filesystem::exists(name); }
@@ -17,15 +16,13 @@ void File::openFileForWriting() {
 }
 
 void File::removeFile() {
-    char pom[64];
-    strcpy(pom, name.c_str());
-    remove(pom);
+    std::filesystem::remove(name);
 }
 
 void File::writeToFile(Controller &c) {
     unsigned int sectionSize = c.getSectionsSize();
     for (unsigned int i = 0; i < sectionSize; i++) {
-        Section s = c.getSections()[i]; 
+        Section s = c.getSections()[i];
         file << s.getId() << " "
              << s.getName() << " "
              << s.getNumberOfDataLines() << std::endl;

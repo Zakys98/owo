@@ -1,10 +1,9 @@
-#ifndef __controller_h__
-#define __controller_h__
+#pragma once
 
-#include <vector>
 #include <cstring>
 #include <iostream>
-#include "section.h"
+#include <section.hpp>
+#include <vector>
 
 class Controller {
    private:
@@ -13,7 +12,7 @@ class Controller {
     char *ptr;
     void checkSameSectionName(std::string &);
     void checkExistSectionName();
-    void checkExistSectionName(std::string &);
+    void checkExistSectionName(const std::string &);
     void addTextToSection(std::string &);
     void printAllSections();
     void printSection();
@@ -24,16 +23,15 @@ class Controller {
     void changeSectionTextsIdAfterDelete();
     void deleteLineOfSection(int);
     void checkIfSectionTextExists(int);
-    void thirdArgumentStrtol(std::string &);
+    void thirdArgumentStrtol(const std::string &);
 
    public:
+    void addDecision(const std::vector<std::string> &);
     void addSection(std::string &);
-    void addSection(Section &); 
+    void addSection(Section &);
     void addTextToSectionDecision(std::string &, std::string &);
-    void printDecision(std::vector<std::string> &);
-    void deleteDecision(std::vector<std::string> &argv);
+    void printDecision(const std::vector<std::string> &);
+    void deleteDecision(const std::vector<std::string> &argv);
     std::vector<Section> getSections();
     unsigned int getSectionsSize();
 };
-
-#endif

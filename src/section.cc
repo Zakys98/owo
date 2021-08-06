@@ -1,4 +1,4 @@
-#include "../include/section.h"
+#include <section.hpp>
 
 Section::Section() : numberOfDataLines(0) {}
 
