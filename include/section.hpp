@@ -4,15 +4,9 @@
 #include <string>
 #include <vector>
 
-class Section {
-   private:
-    int id;
-    std::string name;
-    std::vector<Data> data;
-    int numberOfDataLines;
-    void incNumberOfDataLines();
-    void decNumberOfDatalines();
+namespace Zakys98::owo {
 
+class Section {
    public:
     Section();
     int getId();
@@ -26,4 +20,14 @@ class Section {
     void insertData(Data &);
     void deleteData(int);
     unsigned int getDataSize();
+
+   private:
+    int id;
+    std::string name;
+    std::vector<Data> data;
+    int numberOfDataLines;
+    void incNumberOfDataLines();
+    void decNumberOfDatalines();
 };
+
+}  // namespace Zakys98::owo

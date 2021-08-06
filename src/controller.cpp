@@ -1,10 +1,10 @@
 #include <controller.hpp>
 #include <exception.hpp>
 
-void Controller::addDecision(const std::vector<std::string> &argv) {
+void Zakys98::owo::Controller::addDecision(const std::vector<std::string> &argv) {
 }
 
-void Controller::addSection(std::string &name) {
+void Zakys98::owo::Controller::addSection(std::string &name) {
     Section s;
     checkSameSectionName(name);
     s.setName(name);
@@ -12,18 +12,18 @@ void Controller::addSection(std::string &name) {
     sections.push_back(s);
 }
 
-void Controller::checkSameSectionName(std::string &name) {
+void Zakys98::owo::Controller::checkSameSectionName(std::string &name) {
     if (sections.empty()) return;
     for (auto &section : sections) {
         if (section.getName() == name) {
-            throw MyException::exceptionSameSectionName();
+            throw Zakys98::owo::exceptionSameSectionName();
         }
     }
 }
 
-void Controller::addSection(Section &s) { sections.push_back(s); }
+void Zakys98::owo::Controller::addSection(Section &s) { sections.push_back(s); }
 
-void Controller::addTextToSectionDecision(std::string &section, std::string &text) {
+void Zakys98::owo::Controller::addTextToSectionDecision(std::string &section, std::string &text) {
     try {
         thirdArgumentStrtol(section);
     } catch (std::invalid_argument &e) {
@@ -35,18 +35,18 @@ void Controller::addTextToSectionDecision(std::string &section, std::string &tex
     addTextToSection(text);
 }
 
-void Controller::thirdArgumentStrtol(const std::string &number) {
+void Zakys98::owo::Controller::thirdArgumentStrtol(const std::string &number) {
     sectionId = std::stoi(number);
 }
 
-void Controller::checkExistSectionName() {
+void Zakys98::owo::Controller::checkExistSectionName() {
     for (auto &section : sections) {
         if (section.getId() == sectionId) return;
     }
-    throw MyException::exceptionSectionDoesntExist();
+    throw Zakys98::owo::exceptionSectionDoesntExist();
 }
 
-void Controller::checkExistSectionName(const std::string &name) {
+void Zakys98::owo::Controller::checkExistSectionName(const std::string &name) {
     sectionId = -1;
     for (auto &section : sections) {
         if (section.getName() == name) {
@@ -54,17 +54,17 @@ void Controller::checkExistSectionName(const std::string &name) {
             return;
         }
     }
-    throw MyException::exceptionSectionDoesntExist();
+    throw Zakys98::owo::exceptionSectionDoesntExist();
 }
 
-void Controller::addTextToSection(std::string &text) {
+void Zakys98::owo::Controller::addTextToSection(std::string &text) {
     sections[sectionId].insertData(text);
 }
 
-void Controller::printDecision(const std::vector<std::string> &argv) {
+void Zakys98::owo::Controller::printDecision(const std::vector<std::string> &argv) {
     unsigned int size = argv.size();
     if (size == 0)
-        throw MyException::exceptionMissingArgument();  //navic
+        throw Zakys98::owo::exceptionMissingArgument();  //navic
     try {
         thirdArgumentStrtol(argv[0]);
     } catch (std::invalid_argument &e) {
@@ -85,7 +85,7 @@ void Controller::printDecision(const std::vector<std::string> &argv) {
     }
 }
 
-void Controller::printAllSections() {
+void Zakys98::owo::Controller::printAllSections() {
     unsigned int size = getSectionsSize();
     for (unsigned int i = 0; i < size; i++) {
         sectionId = i;
@@ -93,7 +93,7 @@ void Controller::printAllSections() {
     }
 }
 
-void Controller::printSection() {
+void Zakys98::owo::Controller::printSection() {
     printSectionIdAndName();
     for (int j = 0; j < sections[sectionId].getNumberOfDataLines(); j++) {
         std::cout << "  ";
@@ -101,20 +101,20 @@ void Controller::printSection() {
     }
 }
 
-void Controller::printSectionIdAndName() {
+void Zakys98::owo::Controller::printSectionIdAndName() {
     std::cout << sections[sectionId].getId() << " "
               << sections[sectionId].getName() << "\n";
 }
 
-void Controller::printLineOfSection(int line) {
+void Zakys98::owo::Controller::printLineOfSection(int line) {
     std::cout << sections[sectionId].getData()[line].getId() << " "
               << sections[sectionId].getData()[line].getText() << "\n";
 }
 
-void Controller::deleteDecision(const std::vector<std::string> &argv) {
+void Zakys98::owo::Controller::deleteDecision(const std::vector<std::string> &argv) {
     unsigned int size = argv.size();
     if (size == 0)
-        throw MyException::exceptionMissingArgument();  //navic
+        throw Zakys98::owo::exceptionMissingArgument();  //navic
     try {
         thirdArgumentStrtol(argv[0]);
         checkExistSectionName();
@@ -134,30 +134,30 @@ void Controller::deleteDecision(const std::vector<std::string> &argv) {
     }
 }
 
-void Controller::changeSectionsIdAfterDelete() {
+void Zakys98::owo::Controller::changeSectionsIdAfterDelete() {
     int number = 0;
     for (auto &s : sections) s.setId(number++);
 }
 
-void Controller::deleteSection() {
+void Zakys98::owo::Controller::deleteSection() {
     sections.erase(sections.begin() + sectionId);
 }
 
-void Controller::deleteLineOfSection(int line) {
+void Zakys98::owo::Controller::deleteLineOfSection(int line) {
     sections[sectionId].deleteData(line);
 }
 
-void Controller::changeSectionTextsIdAfterDelete() {
+void Zakys98::owo::Controller::changeSectionTextsIdAfterDelete() {
     unsigned int size = sections[sectionId].getDataSize();
     for (unsigned int i = 0; i < size; i++)
         sections[sectionId].getData()[i].setId(i);
 }
 
-void Controller::checkIfSectionTextExists(int line) {
+void Zakys98::owo::Controller::checkIfSectionTextExists(int line) {
     if ((int)sections[sectionId].getDataSize() <= line || line < 0)
-        throw MyException::exceptionSectionTextDoesntExist();
+        throw Zakys98::owo::exceptionSectionTextDoesntExist();
 }
 
-std::vector<Section> Controller::getSections() { return sections; }
+std::vector<Zakys98::owo::Section> Zakys98::owo::Controller::getSections() { return sections; }
 
-unsigned int Controller::getSectionsSize() { return sections.size(); }
+unsigned int Zakys98::owo::Controller::getSectionsSize() { return sections.size(); }

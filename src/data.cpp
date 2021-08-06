@@ -1,11 +1,11 @@
 #include <data.hpp>
 
-int Data::getId() { return id; }
+int Zakys98::owo::Data::getId() { return id; }
 
-void Data::setId(int id) { this->id = id; }
+void Zakys98::owo::Data::setId(int id) { this->id = id; }
 
-std::string Data::getText() { return text; }
+std::string Zakys98::owo::Data::getText() { return text; }
 
-void Data::setText(std::string &s) {
+void Zakys98::owo::Data::setText(std::string &s) {
     this->text = s;
 }

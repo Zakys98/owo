@@ -2,16 +2,12 @@
 
 #include <controller.hpp>
 #include <data.hpp>
-
 #include <fstream>
 #include <iostream>
 
-class File {
-   private:
-    std::fstream file;
-    std::string name = "document.txt";
-    void parseSectionText(Section &, int);
+namespace Zakys98::owo {
 
+class File {
    public:
     bool checkExists();
     void createFile();
@@ -21,4 +17,11 @@ class File {
     void removeFile();
     void writeToFile(Controller &);
     void parseFileForController(Controller &);
+
+   private:
+    std::fstream file;
+    std::string name = "document.txt";
+    void parseSectionText(Section &, int);
 };
+
+}  // namespace Zakys98::owo

@@ -9,15 +9,17 @@ enum commands {
     add
 };
 
+namespace zowo = Zakys98::owo;
+
 const std::string tryText = "Try : owo\n";
 
 static bool checkIfFileIsInitialized() {
-    File f;
+    zowo::File f;
     return f.checkExists();
 }
 
 static void initFile() {
-    File f;
+    zowo::File f;
     if (f.checkExists()) {
         std::cout << "Your owo is already initialized !\n";  // throw exception
     } else {
@@ -26,22 +28,22 @@ static void initFile() {
     }
 }
 
-static void readAndParseFile(Controller &c) {
-    File f;
+static void readAndParseFile(zowo::Controller &c) {
+    zowo::File f;
     f.openFileForReading();
     f.parseFileForController(c);
     f.closeFile();
 }
 
-static void openAndWriteToFile(Controller &c) {
-    File f;
+static void openAndWriteToFile(zowo::Controller &c) {
+    zowo::File f;
     f.openFileForWriting();
     f.writeToFile(c);
     f.closeFile();
 }
 
 static void removeFile() {
-    File f;
+    zowo::File f;
     std::cout << "Are you sure ? ";
     std::string input{""};
     while (std::cin >> input) {
@@ -67,7 +69,7 @@ static void parseArgOpts(int argc, char **argv) {
     cxxopts::Options options = createArgOpts();
     auto result = options.parse(argc, argv);
 
-    Controller c;
+    zowo::Controller c;
 
     if (result.count("help")) {
         std::cout << options.help();
@@ -108,7 +110,7 @@ int main(int argc, char **argv) {
 
     return 0;
 
-    Controller c;
+    zowo::Controller c;
 
     std::vector<std::string> all_args(argv + 1, argv + argc);
     if (all_args.size() < 1 || all_args.size() > 4) {
@@ -126,13 +128,13 @@ int main(int argc, char **argv) {
             if (argc == 3) {
                 try {
                     c.addSection(all_args[1]);
-                } catch (MyException::exceptionSameSectionName &e) {
+                } catch (zowo::exceptionSameSectionName &e) {
                     std::cout << e.what();
                 }
             } else if (argc == 4)
                 try {
                     c.addTextToSectionDecision(all_args[1], all_args[2]);
-                } catch (MyException::exceptionSectionDoesntExist &e) {
+                } catch (zowo::exceptionSectionDoesntExist &e) {
                     std::cout << e.what();
                 }
 

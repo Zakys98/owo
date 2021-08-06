@@ -1,35 +1,35 @@
 #include <section.hpp>
 
-Section::Section() : numberOfDataLines(0) {}
+Zakys98::owo::Section::Section() : numberOfDataLines(0) {}
 
-int Section::getId() {
+int Zakys98::owo::Section::getId() {
     return this->id;
 }
 
-void Section::setId(int id) {
+void Zakys98::owo::Section::setId(int id) {
     this->id = id;
 }
 
-std::string Section::getName() {
+std::string Zakys98::owo::Section::getName() {
     return this->name;
 }
-void Section::setName(std::string name) {
+void Zakys98::owo::Section::setName(std::string name) {
     this->name = name;
 }
 
-std::vector<Data>& Section::getData() {
+std::vector<Zakys98::owo::Data>& Zakys98::owo::Section::getData() {
     return data;
 }
 
-int Section::getNumberOfDataLines() {
+int Zakys98::owo::Section::getNumberOfDataLines() {
     return numberOfDataLines;
 }
 
-void Section::setNumberOfDataLines(int number) {
+void Zakys98::owo::Section::setNumberOfDataLines(int number) {
     numberOfDataLines = number;
 }
 
-void Section::insertData(std::string &text) {
+void Zakys98::owo::Section::insertData(std::string &text) {
     Data d;
     d.setText(text);
     d.setId(numberOfDataLines);
@@ -37,23 +37,23 @@ void Section::insertData(std::string &text) {
     insertData(d);
 }
 
-void Section::incNumberOfDataLines() {
+void Zakys98::owo::Section::incNumberOfDataLines() {
     numberOfDataLines++;
 }
 
-void Section::insertData(Data &d) {
+void Zakys98::owo::Section::insertData(Data &d) {
     data.push_back(d);
 }
 
-void Section::deleteData(int position) {
+void Zakys98::owo::Section::deleteData(int position) {
     data.erase(data.begin() + position);
     decNumberOfDatalines();
 }
 
-void Section::decNumberOfDatalines() {
+void Zakys98::owo::Section::decNumberOfDatalines() {
     numberOfDataLines--;
 }
 
-unsigned int Section::getDataSize() {
+unsigned int Zakys98::owo::Section::getDataSize() {
     return data.size();
 }

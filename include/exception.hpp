@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-namespace MyException {
+namespace Zakys98::owo {
+
 class exceptionSectionTextDoesntExist : public std::exception {
    public:
     virtual const char* what() const noexcept;
@@ -22,4 +23,5 @@ class exceptionMissingArgument : public std::exception {
    public:
     virtual const char* what() const noexcept;
 };
+
 }  // namespace MyException

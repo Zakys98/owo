@@ -1,5 +1,6 @@
+#pragma once
 
-namespace zakys98 {
+namespace Zakys98::owo {
 
 class Decision {
    public:
