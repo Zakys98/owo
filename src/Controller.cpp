@@ -4,6 +4,13 @@
 
 namespace zowo = Zakys98::owo;
 
+//delete this shit
+void zowo::Controller::thirdArgumentStrtol(const std::string &number) {
+    sectionId = std::stoi(number);
+}
+
+void zowo::Controller::addSection(zowo::Section &s) { sections.push_back(s); }
+
 void zowo::Controller::checkSameSectionName(const std::string &name) {
     if (sections.empty()) return;
     for (auto &section : sections) {
@@ -11,24 +18,6 @@ void zowo::Controller::checkSameSectionName(const std::string &name) {
             throw zowo::exceptionSameSectionName();
         }
     }
-}
-
-void zowo::Controller::addSection(zowo::Section &s) { sections.push_back(s); }
-
-void zowo::Controller::addTextToSectionDecision(std::string &section, std::string &text) {
-    try {
-        thirdArgumentStrtol(section);
-    } catch (std::invalid_argument &e) {
-        checkExistSectionName(section);
-        addTextToSection(text);
-        return;
-    }
-    //checkExistSectionName();
-    addTextToSection(text);
-}
-
-void zowo::Controller::thirdArgumentStrtol(const std::string &number) {
-    sectionId = std::stoi(number);
 }
 
 zowo::Section &zowo::Controller::checkExistSectionName(int id) {
@@ -39,17 +28,12 @@ zowo::Section &zowo::Controller::checkExistSectionName(int id) {
 }
 
 zowo::Section &zowo::Controller::checkExistSectionName(const std::string &name) {
-    sectionId = -1;
     for (auto &section : sections) {
         if (section.getName() == name) {
             return section;
         }
     }
     throw zowo::exceptionSectionDoesntExist();
-}
-
-void zowo::Controller::addTextToSection(std::string &text) {
-    sections[sectionId].insertData(text);
 }
 
 void zowo::Controller::deleteDecision(const std::vector<std::string> &argv) {

@@ -29,7 +29,7 @@ void Zakys98::owo::Section::setNumberOfDataLines(int number) {
     numberOfDataLines = number;
 }
 
-void Zakys98::owo::Section::insertData(std::string &text) {
+void Zakys98::owo::Section::insertData(const std::string &text) {
     Data d;
     d.setText(text);
     d.setId(numberOfDataLines);
