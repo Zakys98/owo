@@ -1,5 +1,7 @@
+#include <AddDecision.hpp>
 #include <Controller.hpp>
 #include <Decision.hpp>
+#include <DeleteDecision.hpp>
 #include <File.hpp>
 #include <PrintDecision.hpp>
 #include <cxxopts.hpp>
@@ -30,13 +32,6 @@ static void readAndParseFile(zowo::Controller &c) {
     zowo::File f;
     f.openFileForReading();
     f.parseFileForController(c);
-    f.closeFile();
-}
-
-static void openAndWriteToFile(zowo::Controller &c) {
-    zowo::File f;
-    f.openFileForWriting();
-    f.writeToFile(c);
     f.closeFile();
 }
 
@@ -80,21 +75,16 @@ static void parseArgOpts(int argc, char **argv) {
         std::cout << options.help();
     }
     if (result.count("add")) {
-        auto &ff = result["add"].as<std::vector<std::string>>();
-        for (const auto &f : ff) {
-            std::cout << f << std::endl;
-        }
+        zowo::AddDecision addDecision;
+        chooseDecision(addDecision, result["add"].as<std::vector<std::string>>());
     }
     if (result.count("delete")) {
-        if (!checkIfFileIsInitialized()) return;
-        readAndParseFile(c);
-        auto &vector_of_args = result["delete"].as<std::vector<std::string>>();
-        c.deleteDecision(vector_of_args);
-        openAndWriteToFile(c);
+        zowo::DeleteDecision deleteDecision;
+        chooseDecision(deleteDecision, result["delete"].as<std::vector<std::string>>());
     }
     if (result.count("print")) {
-        zowo::PrintDecision print;
-        chooseDecision(print, result["print"].as<std::vector<std::string>>());
+        zowo::PrintDecision printDecision;
+        chooseDecision(printDecision, result["print"].as<std::vector<std::string>>());
     }
     if (result.count("init")) {
         initFile();
@@ -108,40 +98,7 @@ int main(int argc, char **argv) {
     try {
         parseArgOpts(argc, argv);
     } catch (std::exception &e) {
-        std::cout << e.what() << std::endl;
-    }
-
-    return 0;
-
-    zowo::Controller c;
-
-    std::vector<std::string> all_args(argv + 1, argv + argc);
-    if (all_args.size() < 1 || all_args.size() > 4) {
-        return 0;
-    }
-
-    int swi = 0;
-
-    switch (swi) {
-        case add:
-            if (!checkIfFileIsInitialized()) break;
-            readAndParseFile(c);
-
-            if (argc == 3) {
-                try {
-                    c.addSection(all_args[1]);
-                } catch (std::exception &e) {
-                    std::cout << e.what();
-                }
-            } else if (argc == 4)
-                try {
-                    c.addTextToSectionDecision(all_args[1], all_args[2]);
-                } catch (std::exception &e) {
-                    std::cout << e.what();
-                }
-
-            openAndWriteToFile(c);
-            break;
+        std::cout << e.what();
     }
 
     return 0;

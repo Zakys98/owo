@@ -1,20 +1,10 @@
 #include <Controller.hpp>
 #include <Exception.hpp>
+#include <File.hpp>
 
 namespace zowo = Zakys98::owo;
 
-void zowo::Controller::addDecision(const std::vector<std::string> &argv) {
-}
-
-void zowo::Controller::addSection(std::string &name) {
-    Section s;
-    checkSameSectionName(name);
-    s.setName(name);
-    s.setId(sections.size());
-    sections.push_back(s);
-}
-
-void zowo::Controller::checkSameSectionName(std::string &name) {
+void zowo::Controller::checkSameSectionName(const std::string &name) {
     if (sections.empty()) return;
     for (auto &section : sections) {
         if (section.getName() == name) {
@@ -23,7 +13,7 @@ void zowo::Controller::checkSameSectionName(std::string &name) {
     }
 }
 
-void zowo::Controller::addSection(Section &s) { sections.push_back(s); }
+void zowo::Controller::addSection(zowo::Section &s) { sections.push_back(s); }
 
 void zowo::Controller::addTextToSectionDecision(std::string &section, std::string &text) {
     try {
@@ -115,3 +105,10 @@ const zowo::Data &zowo::Controller::checkIfSectionTextExists(zowo::Section &sec,
 const std::vector<zowo::Section> &zowo::Controller::getSections() const { return sections; }
 
 unsigned int zowo::Controller::getSectionsSize() { return sections.size(); }
+
+void zowo::Controller::openAndWriteToFile() {
+    zowo::File f;
+    f.openFileForWriting();
+    f.writeToFile(*this);
+    f.closeFile();
+}
