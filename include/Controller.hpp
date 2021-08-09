@@ -1,8 +1,8 @@
 #pragma once
 
+#include <Section.hpp>
 #include <cstring>
 #include <iostream>
-#include <section.hpp>
 #include <vector>
 
 namespace Zakys98::owo {
@@ -13,28 +13,23 @@ class Controller {
     void addSection(std::string &);
     void addSection(Section &);
     void addTextToSectionDecision(std::string &, std::string &);
-    void printDecision(const std::vector<std::string> &);
     void deleteDecision(const std::vector<std::string> &argv);
-    std::vector<Section> getSections();
+    const std::vector<Section> &getSections() const;
     unsigned int getSectionsSize();
+    void checkSameSectionName(std::string &);
+    const Zakys98::owo::Data &checkIfSectionTextExists(Zakys98::owo::Section &, int);
+    Zakys98::owo::Section &checkExistSectionName(int);
+    Zakys98::owo::Section &checkExistSectionName(const std::string &);
 
    private:
     std::vector<Section> sections;
     int sectionId;
     char *ptr;
-    void checkSameSectionName(std::string &);
-    void checkExistSectionName();
-    void checkExistSectionName(const std::string &);
     void addTextToSection(std::string &);
-    void printAllSections();
-    void printSection();
-    void printSectionIdAndName();
-    void printLineOfSection(int);
     void deleteSection();
     void changeSectionsIdAfterDelete();
     void changeSectionTextsIdAfterDelete();
     void deleteLineOfSection(int);
-    void checkIfSectionTextExists(int);
     void thirdArgumentStrtol(const std::string &);
 };
 

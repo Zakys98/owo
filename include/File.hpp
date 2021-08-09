@@ -1,9 +1,10 @@
 #pragma once
 
-#include <controller.hpp>
-#include <data.hpp>
+#include <Controller.hpp>
+#include <Data.hpp>
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
 namespace Zakys98::owo {
 
@@ -20,7 +21,7 @@ class File {
 
    private:
     std::fstream file;
-    std::string name = "document.txt";
+    const std::filesystem::path name = "./document.txt";
     void parseSectionText(Section &, int);
 };
 

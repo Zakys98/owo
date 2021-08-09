@@ -6,10 +6,10 @@ namespace Zakys98::owo {
 
 class Data {
    public:
-    int getId();
+    int getId() const;
     void setId(int);
-    std::string getText();
-    void setText(std::string &);
+    const std::string getText() const;
+    void setText(const std::string &);
 
    private:
     int id;

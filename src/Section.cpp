@@ -1,8 +1,8 @@
-#include <section.hpp>
+#include <Section.hpp>
 
 Zakys98::owo::Section::Section() : numberOfDataLines(0) {}
 
-int Zakys98::owo::Section::getId() {
+int Zakys98::owo::Section::getId() const {
     return this->id;
 }
 
@@ -10,14 +10,14 @@ void Zakys98::owo::Section::setId(int id) {
     this->id = id;
 }
 
-std::string Zakys98::owo::Section::getName() {
+const std::string Zakys98::owo::Section::getName() const {
     return this->name;
 }
-void Zakys98::owo::Section::setName(std::string name) {
+void Zakys98::owo::Section::setName(const std::string name) {
     this->name = name;
 }
 
-std::vector<Zakys98::owo::Data>& Zakys98::owo::Section::getData() {
+const std::vector<Zakys98::owo::Data>& Zakys98::owo::Section::getData() const {
     return data;
 }
 

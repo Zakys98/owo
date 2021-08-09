@@ -1,6 +1,6 @@
 #pragma once
 
-#include <data.hpp>
+#include <Data.hpp>
 #include <string>
 #include <vector>
 
@@ -9,13 +9,13 @@ namespace Zakys98::owo {
 class Section {
    public:
     Section();
-    int getId();
+    int getId() const;
     void setId(int);
-    std::string getName();
-    void setName(std::string);
+    const std::string getName() const;
+    void setName(const std::string);
     int getNumberOfDataLines();
     void setNumberOfDataLines(int);
-    std::vector<Data> &getData();
+    const std::vector<Data> &getData() const;
     void insertData(std::string &);
     void insertData(Data &);
     void deleteData(int);

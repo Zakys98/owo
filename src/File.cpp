@@ -1,5 +1,4 @@
-#include <file.hpp>
-#include <filesystem>
+#include <File.hpp>
 
 bool Zakys98::owo::File::checkExists() { return std::filesystem::exists(name); }
 

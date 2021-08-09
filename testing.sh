@@ -32,33 +32,33 @@ echo -e "\n${IRed}Testing local owo${Color_Off}\n"
 ./owo clean
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (print help text)${Color_Off}"
-diff -u -s $TS_help_text <(./owo help)
+diff -u -s $TS_help_text <(./owo --help)
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (initialize document.txt))${Color_Off}"
-./owo init
+./owo --init
 diff -u -s $EXP2 <(ls)
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (clean document.txt)${Color_Off}"
-./owo clean
+./owo --clean
 diff -u -s $EXP3 <(ls)
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (initialize owo again)${Color_Off}"
-./owo init
+./owo --init
 diff -u -s $EXP4 <(./owo init)
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add section)${Color_Off}"
-./owo add first
+./owo --add first
 diff -s document.txt $EXP5
 ((number++))
 
 echo -e "${IYellow}\tCase ${IBlue}#$number${IYellow} (add more sections)${Color_Off}"
-./owo add second
-./owo add third
-./owo add fourth
+./owo --add second
+./owo --add third
+./owo --add fourth
 diff -s document.txt $EXP6
 ((number++))
 

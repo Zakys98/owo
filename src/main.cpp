@@ -1,8 +1,8 @@
-#include <controller.hpp>
-#include <cstring>
+#include <Controller.hpp>
+#include <Decision.hpp>
+#include <File.hpp>
+#include <PrintDecision.hpp>
 #include <cxxopts.hpp>
-#include <exception.hpp>
-#include <file.hpp>
 #include <iostream>
 
 enum commands {
@@ -10,8 +10,6 @@ enum commands {
 };
 
 namespace zowo = Zakys98::owo;
-
-const std::string tryText = "Try : owo\n";
 
 static bool checkIfFileIsInitialized() {
     zowo::File f;
@@ -58,6 +56,13 @@ static void removeFile() {
     }
 }
 
+static void chooseDecision(zowo::Decision &decision, const std::vector<std::string> &args) {
+    zowo::Controller con;
+    if (!checkIfFileIsInitialized()) return;
+    readAndParseFile(con);
+    decision.make(con, args);
+}
+
 static cxxopts::Options createArgOpts() {
     cxxopts::Options options("Owo", "Program for memorization commands");
     options.add_options()("init", "init owo")("a, add", "add section or line in section", cxxopts::value<std::vector<std::string>>())("d, delete", "delete section or line in section", cxxopts::value<std::vector<std::string>>())("p, print", "print section or line in section", cxxopts::value<std::vector<std::string>>())("clean", "clean owo")("h, help", "help message");
@@ -88,10 +93,8 @@ static void parseArgOpts(int argc, char **argv) {
         openAndWriteToFile(c);
     }
     if (result.count("print")) {
-        if (!checkIfFileIsInitialized()) return;
-        readAndParseFile(c);
-        auto &vector_of_args = result["delete"].as<std::vector<std::string>>();
-        c.printDecision(vector_of_args);
+        zowo::PrintDecision print;
+        chooseDecision(print, result["print"].as<std::vector<std::string>>());
     }
     if (result.count("init")) {
         initFile();
@@ -105,7 +108,7 @@ int main(int argc, char **argv) {
     try {
         parseArgOpts(argc, argv);
     } catch (std::exception &e) {
-        std::cout << e.what();
+        std::cout << e.what() << std::endl;
     }
 
     return 0;
@@ -114,7 +117,6 @@ int main(int argc, char **argv) {
 
     std::vector<std::string> all_args(argv + 1, argv + argc);
     if (all_args.size() < 1 || all_args.size() > 4) {
-        std::cout << tryText;
         return 0;
     }
 
@@ -128,13 +130,13 @@ int main(int argc, char **argv) {
             if (argc == 3) {
                 try {
                     c.addSection(all_args[1]);
-                } catch (zowo::exceptionSameSectionName &e) {
+                } catch (std::exception &e) {
                     std::cout << e.what();
                 }
             } else if (argc == 4)
                 try {
                     c.addTextToSectionDecision(all_args[1], all_args[2]);
-                } catch (zowo::exceptionSectionDoesntExist &e) {
+                } catch (std::exception &e) {
                     std::cout << e.what();
                 }
 
@@ -144,5 +146,5 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-
+// do classy controller pridat atribut zakys98::owo::file a pridat parsovani do controleru
 // delsi jmeno u sekce dela problem
