@@ -28,13 +28,6 @@ static void initFile() {
     }
 }
 
-static void readAndParseFile(zowo::Controller &c) {
-    zowo::File f;
-    f.openFileForReading();
-    f.parseFileForController(c);
-    f.closeFile();
-}
-
 static void removeFile() {
     zowo::File f;
     std::cout << "Are you sure ? ";
@@ -54,7 +47,7 @@ static void removeFile() {
 static void chooseDecision(zowo::Decision &decision, const std::vector<std::string> &args) {
     zowo::Controller con;
     if (!checkIfFileIsInitialized()) return;
-    readAndParseFile(con);
+    con.readAndParseFile();
     decision.make(con, args);
 }
 
@@ -103,5 +96,5 @@ int main(int argc, char **argv) {
 
     return 0;
 }
-// do classy controller pridat atribut zakys98::owo::file a pridat parsovani do controleru
+// do classy controller pridat atribut zakys98::owo::file a pridat parsovani do controleru //asi zbytecny
 // delsi jmeno u sekce dela problem

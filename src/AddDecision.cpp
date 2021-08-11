@@ -15,18 +15,15 @@ static void addTextToSection(zowo::Section &sec, const std::string &text) {
     sec.insertData(text);
 }
 
-//dodelat na int
 static void addDataToSection(zowo::Controller &con, const std::vector<std::string> &args) {
+    int checkIfArgIsInt = -1;
     try {
-        //thirdArgumentStrtol(section);
+        checkIfArgIsInt = std::stoi(args[0]);
     } catch (std::invalid_argument &e) {
-        zowo::Section &sec = con.checkExistSectionName(args[0]);
-        addTextToSection(sec, args[1]);
+        addTextToSection(con.checkExistsSectionName(args[0]), args[1]);
     }
-    zowo::Section &sec = con.checkExistSectionName(args[0]);
-    addTextToSection(sec, args[1]);
-    //checkExistSectionName();
-    //addTextToSection(text);
+    if(checkIfArgIsInt != -1)
+        addTextToSection(con.checkExistsSectionName(checkIfArgIsInt), args[1]);
 }
 
 void zowo::AddDecision::make(zowo::Controller &con, const std::vector<std::string> &args) {

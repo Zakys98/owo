@@ -29,18 +29,17 @@ static void printSection(const zowo::Section &sec) {
 }
 
 // PREDELAT
-//mozna predelat na template
 void zowo::PrintDecision::make(zowo::Controller &con, const std::vector<std::string> &args) {
     unsigned int size = args.size();
-    int q = -1;
+    int checkIfArgIsInt = -1;
     zowo::Section sec;
     try {
-        q = std::stoi(args[0]);
+        checkIfArgIsInt = std::stoi(args[0]);
     } catch (std::invalid_argument &e) {
-        sec = con.checkExistSectionName(args[0]);
+        sec = con.checkExistsSectionName(args[0]);
     }
-    if (q != -1)
-        sec = con.checkExistSectionName(q);
+    if (checkIfArgIsInt != -1)
+        sec = con.checkExistsSectionName(checkIfArgIsInt);
 
     if (size == 1) {
         if (args[0] == std::string("--sections")) {
@@ -52,7 +51,7 @@ void zowo::PrintDecision::make(zowo::Controller &con, const std::vector<std::str
     } else if (size == 2) {
         // catch invalid argument u line
         int line = std::stoi(args[1]);
-        const zowo::Data &data = con.checkIfSectionTextExists(sec, line);
+        const zowo::Data &data = con.checkExistsSectionText(sec, line);
         printLineOfSection(data);
     }
 }
