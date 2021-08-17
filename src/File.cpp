@@ -1,31 +1,27 @@
-#include "../include/file.h"
+#include <File.hpp>
 
-#include <filesystem>
+bool Zakys98::owo::File::checkExists() { return std::filesystem::exists(name); }
 
-bool File::checkExists() { return std::filesystem::exists(name); }
+void Zakys98::owo::File::createFile() { file.open(name, std::fstream::out); }
 
-void File::createFile() { file.open(name, std::fstream::out); }
+void Zakys98::owo::File::closeFile() { file.close(); }
 
-void File::closeFile() { file.close(); }
-
-void File::openFileForReading() {
+void Zakys98::owo::File::openFileForReading() {
     file.open(name, std::fstream::in | std::fstream::app);
 }
 
-void File::openFileForWriting() {
+void Zakys98::owo::File::openFileForWriting() {
     file.open(name, std::fstream::out | std::fstream::trunc);
 }
 
-void File::removeFile() {
-    char pom[64];
-    strcpy(pom, name.c_str());
-    remove(pom);
+void Zakys98::owo::File::removeFile() {
+    std::filesystem::remove(name);
 }
 
-void File::writeToFile(Controller &c) {
+void Zakys98::owo::File::writeToFile(Controller &c) {
     unsigned int sectionSize = c.getSectionsSize();
     for (unsigned int i = 0; i < sectionSize; i++) {
-        Section s = c.getSections()[i]; 
+        Section s = c.getSections()[i];
         file << s.getId() << " "
              << s.getName() << " "
              << s.getNumberOfDataLines() << std::endl;
@@ -37,7 +33,7 @@ void File::writeToFile(Controller &c) {
     }
 }
 
-void File::parseFileForController(Controller &c) {
+void Zakys98::owo::File::parseFileForController(Controller &c) {
     while (!file.eof()) {
         Section s;
         std::string section_name;
@@ -53,7 +49,7 @@ void File::parseFileForController(Controller &c) {
     }
 }
 
-void File::parseSectionText(Section &s, int numberOfLines) {
+void Zakys98::owo::File::parseSectionText(Section &s, int numberOfLines) {
     file.ignore();
     for (int i = 0; i < numberOfLines; i++) {
         std::string pom;
