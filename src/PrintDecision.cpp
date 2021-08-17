@@ -31,15 +31,13 @@ static void printSection(const zowo::Section &sec) {
 // PREDELAT
 void zowo::PrintDecision::make(zowo::Controller &con, const std::vector<std::string> &args) {
     unsigned int size = args.size();
-    int checkIfArgIsInt = -1;
     zowo::Section sec;
-    try {
-        checkIfArgIsInt = std::stoi(args[0]);
-    } catch (std::invalid_argument &e) {
-        sec = con.checkExistsSectionName(args[0]);
-    }
-    if (checkIfArgIsInt != -1)
-        sec = con.checkExistsSectionName(checkIfArgIsInt);
+    if(Decision::chooseType(args[0]) == Decision::TYPE::STRING){
+        sec = con.checkExistsSectionName(args[0]); 
+    } else {
+        int intArg = Decision::returnInt(args[0]);
+        sec = con.checkExistsSectionName(intArg);
+    }   
 
     if (size == 1) {
         if (args[0] == std::string("--sections")) {

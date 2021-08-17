@@ -20,14 +20,13 @@ static void changeSectionTextsIdAfterDelete() {
 void zowo::DeleteDecision::make(zowo::Controller &con, const std::vector<std::string> &args) {
     unsigned int size = args.size();
     zowo::Section sec;
-    int checkIfArgIsInt = -1;
-    try {
-        checkIfArgIsInt = std::stoi(args[0]);
-    } catch (std::invalid_argument &e) {
+    if(Decision::chooseType(args[0]) == Decision::TYPE::STRING){
         sec = con.checkExistsSectionName(args[0]);
+    } else {
+        int intArg = Decision::returnInt(args[0]);
+        sec = con.checkExistsSectionName(intArg);
     }
-    if (checkIfArgIsInt != -1)
-        sec = con.checkExistsSectionName(checkIfArgIsInt);
+        
     if (size == 1) {
         con.deleteSection(sec);
         changeSectionsIdAfterDelete(con.getSections());
